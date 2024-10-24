@@ -1,0 +1,73 @@
+pipeline {
+    agent any 
+
+    stages {
+        stage('Fetch Teams Data') {
+            steps {
+                script {
+                    // Run the shell script to fetch teams
+                    sh '''
+                        #!/bin/bash
+                        UD_SERVER="http://your-udeploy-server:port"  # Replace with your uDeploy server URL
+                        UD_USERNAME="your_username"                    # Replace with your uDeploy username
+                        UD_PASSWORD="your_password"                    # Replace with your uDeploy password
+                        OUTPUT_JSON="teams.json"
+
+                        # Fetch the teams from uDeploy
+                        echo "Fetching teams from uDeploy..."
+                        curl -u "$UD_USERNAME:$UD_PASSWORD" -X GET "$UD_SERVER/cli/teams" -o "$OUTPUT_JSON"
+
+                        # Check if the command was successful
+                        if [ $? -ne 0 ]; then
+                            echo "Failed to fetch teams from uDeploy."
+                            exit 1
+                        fi
+
+                        echo "Teams data fetched successfully and saved to $OUTPUT_JSON."
+                    '''
+                }
+            }
+        }
+        stage('Process Teams Data') {
+            steps {
+                script {
+                    // Python code to process the JSON data and output to CSV
+                    writeFile file: 'process_teams.py', text: '''
+import json
+import csv
+
+# Configuration
+INPUT_JSON = "teams.json"
+OUTPUT_CSV = "udeploy_teams.csv"
+
+# Function to save team information to CSV
+def save_to_csv(teams):
+    with open(OUTPUT_CSV, mode='w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(["team_id", "team_name", "members"])  # Header
+        
+        for team in teams:
+            team_id = team.get("id")
+            team_name = team.get("name")
+            members = "; ".join(member["name"] for member in team.get("members", []))
+            writer.writerow([team_id, team_name, members])  # Write team info
+
+# Main execution
+if __name__ == "__main__":
+    # Load teams data from JSON
+    with open(INPUT_JSON, 'r') as file:
+        teams = json.load(file)
+    
+    save_to_csv(teams)
+    print(f"Team extraction complete. Output written to {OUTPUT_CSV}.")
+                    '''
+                    
+                    // Run the Python script to process the JSON data
+                    sh '''
+                        python3 process_teams.py
+                    '''
+                }
+            }
+        }
+    }
+}
