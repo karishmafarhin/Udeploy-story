@@ -71,3 +71,8 @@ if __name__ == "__main__":
         }
     }
 }
+
+
+withCredentials([usernamePassword(credentialsId: 'udeploy-creds', 
+                                                  usernameVariable: 'UD_USERNAME', 
+                                                  passwordVariable: 'UD_PASSWORD')])
