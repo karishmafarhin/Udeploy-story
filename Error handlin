@@ -1,0 +1,99 @@
+import csv
+import json
+
+# Constants (adjust paths accordingly)
+INPUT_JSON = "teams_data.json"  # JSON input file
+OUTPUT_CSV = "teams_info.csv"   # CSV output file
+
+def collect_team_data(teams):
+    """Collect all team data into a list of dictionaries."""
+    data = []  # Initialize an empty list to store all the data
+
+    # Iterate over each team
+    for team in teams:
+        try:
+            team_name = team['name']  # Direct access to 'name'
+        except KeyError:
+            team_name = "Unknown Team"
+            print("Warning: 'name' key missing for a team.")
+
+        try:
+            role_mappings = team['roleMappings']  # Direct access to 'roleMappings'
+        except KeyError:
+            role_mappings = []
+            print(f"Warning: 'roleMappings' key missing for team: {team_name}")
+
+        if not role_mappings:
+            # If no roles exist, append a row with 'N/A' values
+            data.append({
+                "team_name": team_name,
+                "role_name": "N/A",
+                "user_name": "N/A",
+                "user_email": "N/A"
+            })
+            print(f"No roles found for team: {team_name}")
+            continue
+
+        # Iterate over each role mapping for the current team
+        for role in role_mappings:
+            try:
+                role_name = role['role']['name']  # Direct access to 'role' and 'name'
+            except KeyError:
+                role_name = "Unknown Role"
+                print(f"Warning: 'name' key missing in role for team: {team_name}")
+
+            try:
+                user_name = role['user']['name']  # Direct access to 'user' and 'name'
+            except KeyError:
+                user_name = "Unknown User"
+                print(f"Warning: 'name' key missing in user for team: {team_name}")
+
+            try:
+                user_email = role['user']['email']  # Direct access to 'user' and 'email'
+            except KeyError:
+                user_email = "Unknown Email"
+                print(f"Warning: 'email' key missing in user for team: {team_name}")
+
+            # Append the data as a dictionary
+            data.append({
+                "team_name": team_name,
+                "role_name": role_name,
+                "user_name": user_name,
+                "user_email": user_email
+            })
+            print(f"Added user: {user_name} to team: {team_name}")
+
+    return data  # Return the collected data
+
+def write_to_csv(data, output_file):
+    """Write collected data to a CSV file."""
+    # Open the CSV file in write mode
+    with open(output_file, mode="w", newline="") as file:
+        writer = csv.DictWriter(file, fieldnames=["team_name", "role_name", "user_name", "user_email"])
+
+        # Write the header
+        writer.writeheader()
+
+        # Write all rows from the data list
+        writer.writerows(data)
+
+    print(f"Data successfully written to {output_file}.")
+
+# Main execution block
+if __name__ == "__main__":
+    try:
+        # Load the JSON data from the input file
+        with open(INPUT_JSON, "r") as file:
+            teams = json.load(file)
+    except FileNotFoundError:
+        print(f"Error: Input file {INPUT_JSON} not found.")
+        exit(1)
+    except json.JSONDecodeError as e:
+        print(f"Error: Failed to parse JSON - {e}")
+        exit(1)
+
+    # Collect team data
+    collected_data = collect_team_data(teams)
+
+    # Write the collected data to a CSV file
+    write_to_csv(collected_data, OUTPUT_CSV)
