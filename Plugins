@@ -1,0 +1,10 @@
+// Get the Jenkins instance
+def jenkinsInstance = Jenkins.instance
+
+// Get the list of installed plugins
+def plugins = jenkinsInstance.pluginManager.plugins
+
+println "Installed Plugins:"
+plugins.each { plugin ->
+    println "${plugin.getShortName()} - ${plugin.getVersion()}"
+}
