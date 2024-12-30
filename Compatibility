@@ -1,0 +1,24 @@
+import jenkins.model.Jenkins
+
+// Get Jenkins instance
+def jenkinsInstance = Jenkins.instance
+
+// Get Jenkins version
+def jenkinsVersion = jenkinsInstance.getVersion()
+
+// Get installed plugins
+def plugins = jenkinsInstance.pluginManager.plugins
+
+println "Checking Plugin Compatibility with Jenkins Version: $jenkinsVersion"
+
+plugins.each { plugin ->
+    def pluginName = plugin.getShortName()
+    def pluginVersion = plugin.getVersion()
+    def requiredCoreVersion = plugin.getManifestAttributes().getValue('Jenkins-Version')
+
+    if (requiredCoreVersion && (jenkinsVersion.isOlderThan(requiredCoreVersion))) {
+        println "⚠️ Plugin: $pluginName ($pluginVersion) requires Jenkins $requiredCoreVersion - May be incompatible."
+    } else {
+        println "✅ Plugin: $pluginName ($pluginVersion) is compatible."
+    }
+}
