@@ -1,0 +1,42 @@
+A multi-uDeploy agent setup is implemented to enhance high availability (HA) and scalability for deployment tasks. Here's a brief explanation:
+
+Why it was needed:
+
+1. High Availability (HA):
+
+Ensures that deployment processes are not interrupted if one agent goes down, as another agent is available to take over the workload.
+
+
+
+2. Scalability:
+
+Distributes deployment tasks across multiple agents, reducing the risk of bottlenecks during large-scale or concurrent deployments.
+
+
+
+3. Load Balancing:
+
+Balances deployment workloads, especially in environments like PCF (Pivotal Cloud Foundry), where multiple applications or services might be deployed simultaneously.
+
+
+
+4. Fault Tolerance:
+
+Minimizes the impact of agent failure, reducing downtime and ensuring continuous delivery pipelines remain operational.
+
+
+
+
+What it actually does:
+
+Multiple agents are configured under the same logical setup.
+
+When a deployment request is initiated, uDeploy automatically selects an available agent.
+
+If an agent becomes unavailable, other agents take over the pending deployment tasks without manual intervention.
+
+This setup supports environments with high deployment demands or critical applications requiring 24/7 uptime.
+
+
+Let me know if you'd like to document this explanation for your application teams.
+
