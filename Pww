@@ -1,0 +1,6 @@
+The password rotation for our service account has been successfully completed. Credentials and system configurations have been updated across all controllers of CloudBees CI, as well as Jenkins Dev, Jenkins PROD, and uDeploy. Thorough validation has been performed, and everything is functioning as expected. An email has been sent to all respective application teams individually, requesting their validation.
+
+The team is actively following up with the application teams for their confirmation, and we will continue to provide updates on the status here.
+
+Please find the attached validation document for your reference.
+
