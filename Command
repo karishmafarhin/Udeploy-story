@@ -1,1 +1,10 @@
 ls -ltr | awk '{print $6, $7, $8, $9}' | xargs -d '\n' -I {} sh -c 'du -sh "{}" 2>> Errors.txt || echo "{}" >> Success.txt'
+
+
+ls -l | awk '{print $5, $6, $7, $8, $9}' | while read size date1 date2 date3 filename; do
+  if [ -f "$filename" ]; then
+    echo "$(du -sh "$filename" | awk '{print $1}') $date1 $date2 $date3 $filename" >> Success.txt
+  else
+    echo "$size $date1 $date2 $date3 $filename" >> Errors.txt
+  fi
+done
