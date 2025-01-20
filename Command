@@ -8,3 +8,16 @@ ls -l | awk '{print $5, $6, $7, $8, $9}' | while read size date1 date2 date3 fil
     echo "$size $date1 $date2 $date3 $filename" >> Errors.txt
   fi
 done
+
+
+ls -l | awk '{for (i=6; i<NF; i++) printf $i " "; print $NF}' | while read -r date1 date2 date3 filename; do
+  if [ -f "$filename" ]; then
+    echo "$(du -sh "$filename" | awk '{print $1}') $date1 $date2 $date3 $filename" >> Success.txt
+  else
+    actual_size=$(du -sh "$filename" 2>/dev/null | awk '{print $1}')
+    if [ -z "$actual_size" ]; then
+      actual_size="N/A"  # If `du` fails, set size to "N/A"
+    fi
+    echo "$actual_size $date1 $date2 $date3 $filename" >> Errors.txt
+  fi
+done
