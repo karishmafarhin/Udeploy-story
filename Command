@@ -1,0 +1,1 @@
+ls -ltr | awk '{print $6, $7, $8, $9}' | xargs -d '\n' -I {} sh -c 'du -sh "{}" 2>> Errors.txt || echo "{}" >> Success.txt'
