@@ -1,0 +1,40 @@
+pipeline {
+    agent any
+    stages {
+        stage('Capture Variables') {
+            steps {
+                script {
+                    // Capture multiple variables from shell script
+                    def output = sh(script: '''
+                        VAR1="Value1"
+                        VAR2="Value2"
+                        VAR3="Value3"
+                        echo "VAR1=$VAR1 VAR2=$VAR2 VAR3=$VAR3"
+                    ''', returnStdout: true).trim()
+
+                    // Parse variables and assign to env
+                    output.split().each { pair ->
+                        def (key, value) = pair.split('=')
+                        env."${key}" = value.trim()
+                    }
+
+                    echo "Captured VAR1: ${env.VAR1}, VAR2: ${env.VAR2}, VAR3: ${env.VAR3}"
+                }
+            }
+        }
+        stage('Use Variables') {
+            steps {
+                script {
+                    // Use variables in Groovy
+                    echo "Using VAR1: ${env.VAR1}, VAR2: ${env.VAR2}, VAR3: ${env.VAR3}"
+                }
+                sh '''
+                    # Use variables in shell
+                    echo "VAR1: $VAR1"
+                    echo "VAR2: $VAR2"
+                    echo "VAR3: $VAR3"
+                '''
+            }
+        }
+    }
+}
