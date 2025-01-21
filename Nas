@@ -1,0 +1,21 @@
+Subject: Recommendation for NAS Volume Size for UDeploy Archive Data
+
+Dear [Client's Name],
+
+We have analyzed the current storage consumption of the archive directory on the uDeploy server, which holds archived data. The following details summarize the findings:
+
+Current Storage Usage: 6.4 TB (1 year of data).
+
+Retention Requirement: Minimum of 3 years of data.
+
+Estimated Storage Requirement for 3 Years: Approximately 19.2 TB.
+
+
+To ensure sufficient storage capacity and accommodate future growth or unexpected increases, we recommend creating a dedicated NAS volume of 22–25 TB for the archive data. This allocation will provide room for expansion while meeting the 3-year retention requirement.
+
+Please let us know your thoughts or if any further details are required.
+
+Best regards,
+[Your Name]
+[Your Position]
+
