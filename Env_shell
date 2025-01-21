@@ -87,3 +87,57 @@ pipeline {
         }
     }
 }
+
+
+
+pipeline {
+    agent any
+    stages {
+        stage('Extract Variables from Shell') {
+            steps {
+                script {
+                    // Run the shell script and capture all required variables
+                    def output = sh(script: '''
+                        set -xe
+
+                        # Extract variables
+                        requestorName=$(cat requestorName.txt)
+                        requestorSSO=$(echo "$requestorName" | cut -d '(' -f 2 | cut -d ')' -f 1)
+                        requestorEmail=$(curl -s -u $PR_CREATION_ID:X_GET "$BASE_URL/users/$requestorSSO" | jq -r '.emailAddress')
+                        requestorID=$(curl -s -u $PR_CREATION_ID:X_GET "$BASE_URL/users/$requestorSSO" | jq -r '.id')
+                        
+                        # Output variables for Groovy to capture
+                        echo "REQUESTOR_SSO=$requestorSSO"
+                        echo "REQUESTOR_EMAIL=$requestorEmail"
+                        echo "REQUESTOR_ID=$requestorID"
+                    ''', returnStdout: true).trim()
+
+                    // Parse the output and assign variables to environment
+                    output.eachLine { line ->
+                        def (key, value) = line.split('=')
+                        env."${key}" = value?.trim()
+                        echo "Captured: ${key} = ${value}"
+                    }
+                }
+            }
+        }
+        stage('Use Variables in Groovy') {
+            steps {
+                script {
+                    echo "Using Requestor SSO in Groovy: ${env.REQUESTOR_SSO}"
+                    echo "Using Requestor Email in Groovy: ${env.REQUESTOR_EMAIL}"
+                    echo "Using Requestor ID in Groovy: ${env.REQUESTOR_ID}"
+                }
+            }
+        }
+        stage('Use Variables in Shell') {
+            steps {
+                sh '''
+                    echo "Using Requestor SSO in Shell: $REQUESTOR_SSO"
+                    echo "Using Requestor Email in Shell: $REQUESTOR_EMAIL"
+                    echo "Using Requestor ID in Shell: $REQUESTOR_ID"
+                '''
+            }
+        }
+    }
+}
