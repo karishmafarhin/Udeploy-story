@@ -38,3 +38,52 @@ pipeline {
         }
     }
 }
+
+
+
+
+
+
+pipeline {
+    agent any
+    stages {
+        stage('Capture Variables') {
+            steps {
+                script {
+                    // Run the shell script and capture specific variables
+                    def output = sh(script: '''
+                        # Your shell script
+                        echo "Some curl command..."
+                        curl -s https://jsonplaceholder.typicode.com/posts/1 >/dev/null
+
+                        # Define required variables
+                        VAR1="Value1"
+                        VAR2="Value2"
+                        echo VAR1=$VAR1
+                        echo VAR2=$VAR2
+                    ''', returnStdout: true).trim()
+
+                    // Extract and assign variables
+                    env.VAR1 = output.find(/VAR1=(.*)/) { _, val -> val }?.trim()
+                    env.VAR2 = output.find(/VAR2=(.*)/) { _, val -> val }?.trim()
+
+                    echo "Captured VAR1: ${env.VAR1}, VAR2: ${env.VAR2}"
+                }
+            }
+        }
+        stage('Use Variables') {
+            steps {
+                script {
+                    // Use in Groovy
+                    echo "Using VAR1 in Groovy: ${env.VAR1}"
+                    echo "Using VAR2 in Groovy: ${env.VAR2}"
+                }
+                sh '''
+                    # Use in shell
+                    echo "Using VAR1: $VAR1"
+                    echo "Using VAR2: $VAR2"
+                '''
+            }
+        }
+    }
+}
