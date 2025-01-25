@@ -1,0 +1,2 @@
+The high-availability (HA) uDeploy agent setup for PCF deployments has been successfully completed. Comprehensive validations have been performed, including blue-green deployment and parallel execution of blue-green scenarios. Live applications, such as CATS, were tested in QA/UAT environments with approval from the application team. Additionally, the load balancing strategy was thoroughly validated by toggling between two nodes, ensuring that the load is evenly distributed across both agents.
+
