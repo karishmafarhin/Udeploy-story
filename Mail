@@ -1,0 +1,21 @@
+
+
+
+Subject: Change Creation Job Failed - Build #${BUILD_NUMBER}
+
+Body:
+Hello Team,
+
+The Change Creation Job has failed. Please review the logs for details.
+
+Build Number: #${BUILD_NUMBER}
+
+Job Name: ${JOB_NAME}
+
+Build URL: ${BUILD_URL}
+
+
+Kindly take the necessary action to address the issue.
+
+Thanks,
+
