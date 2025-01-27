@@ -1,2 +1,6 @@
 
 "We have successfully implemented the HA uDeploy agent setup for PCF deployments in the uDeploy PROD environment. Additionally, the SAN path has been replaced with the NAS path. Please monitor all PROD releases closely for any issues and report them to me immediately. Thank you!"
+
+
+To uniquely identify which account a request is coming from when using PasswordIsAuthToken, enable audit logging in uDeploy. The logs will capture details like the token used, the actions performed, and the associated user account. This helps trace the request back to the originating account.
+
