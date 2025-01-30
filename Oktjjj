@@ -1,0 +1,25 @@
+Here are one-liner objectives for each point:
+
+1. High Available and Resilient DevOps – Ensure high availability, elasticity, and resiliency of DevOps tools (uDeploy, CloudBees CI/CD).
+
+
+2. SIAM Enablement for DevOps Tools – Centralize user management for access provisioning and revocation in uDeploy and Bitbucket.
+
+
+3. DevOps Platform BAU (Vulnerability Remediation) – Address and remediate security vulnerabilities in DevOps platforms.
+
+
+4. DevOps Platform BAU (Version Upgrade, CERT renewals, adhoc work) – Manage version upgrades, certificate renewals, and other maintenance tasks.
+
+
+5. Onboarding DevOps Tools to Stone Branch – Migrate DevOps tools to the stone branch across development, production, and disaster recovery.
+
+
+6. All DevOps Tools Cleanup – Automation – Automate the cleanup and maintenance of all DevOps tools.
+
+
+7. Okta Integration (uDeploy and Nexus) – Integrate Okta for authentication and access management in uDeploy and Nexus.
+
+
+
+Let me know if you need refinements.
