@@ -1,0 +1,3 @@
+Business Justification for UDeploy Prod Archival Backup
+
+We need to retain UDeploy production archival data for three years to support deployment history, troubleshooting, and business continuity. Due to limited space on the SAN filesystem, a 10TB NAS volume was provisioned and mounted. To prevent data loss and ensure recovery in case of failures or corruption, regular backups of this NAS mount are essential. We request approval to schedule these backups as part of our data protection strategy.
