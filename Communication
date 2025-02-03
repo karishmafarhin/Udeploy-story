@@ -1,0 +1,14 @@
+
+Dear Team,
+
+We are planning to perform the Dry Run of OKTA integration in the uDeploy DEV server. As part of this activity, we will be making changes only in the credentials section, specifically replacing the password with a token for custom accounts.
+
+Additionally, the following controllers are still using the IBM plugin to connect to uDeploy. For these controllers, we will be updating the credentials in the IBM plugin section alone.
+
+Not in Our Scope:
+
+Free-style jobs
+
+Inline scripts
+
+Other controller plugin configurations
