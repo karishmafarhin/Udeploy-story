@@ -1,0 +1,45 @@
+
+Dear Application Teams,
+
+As part of the OKTA integration with uDeploy Dev, we will be transitioning to using authentication tokens for connectivity. This change is necessary because, after the OKTA integration, authentication via other methods will no longer be supported.
+
+We have tested the auth tokens from our end and confirmed they are working as expected. However, we need confirmation from your side to ensure that your pipelines continue functioning without issues.
+
+Action Required:
+
+1. Test connectivity to uDeploy Dev using the provided authentication token.
+
+
+2. Validate that your pipelines work as expected with the new credentials.
+
+
+3. Confirm back to us once your validation is complete.
+
+
+
+Once we receive confirmations, we will proceed with updating the authentication token for uDeploy Dev.
+
+Please complete this validation by [mention deadline if applicable] and reach out if you face any issues.
+
+Best regards,
+[Your Name]
+[Your Team/Organization]
+
+
+Subject: Implementation Update: OKTA Integration Dry Run for uDeploy Dev
+
+Dear Application Teams,
+
+The validation of authentication tokens has been successfully completed with the teams managing their pipeline scripts. Based on this, we are proceeding with the implementation of this change.
+
+Additionally, we will be performing a dry run of the OKTA integration for uDeploy Dev to assess its impact. Once the validation is complete, we will rollback the changes.
+
+We will keep you updated on the progress and any necessary next steps. Please reach out if you have any concerns.
+
+Best regards,
+[Your Name]
+[Your Team/Organization]
+
+
+
+
