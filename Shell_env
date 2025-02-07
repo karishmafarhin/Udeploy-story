@@ -1,0 +1,98 @@
+pipeline {
+    agent any
+    environment {
+        BASE_URL       = 'http://your.base.url'
+        PROJECT_KEY    = 'YOUR_PROJECT'
+        REPO_SLUG      = 'your-repo'
+        TAG_NAME       = 'v1.0'
+        PR_CREATION_ID = 'your_pr_creation_id'
+        requestorSSO   = 'requestor_username'
+    }
+    stages {
+        stage('Extract Variables') {
+            steps {
+                script {
+                    def output = sh(script: '''
+                        #!/bin/bash
+                        set -e
+                        
+                        # (Any other commands can print their output to stderr if needed)
+                        # Extract requestorEmail
+                        requestorEmail=$(curl -s -u "$PR_CREATION_ID" -X GET "$BASE_URL/users/$requestorSSO" | jq -r '.emailAddress')
+                        
+                        # Extract TAG_COMMIT
+                        TAG_COMMIT=$(curl -s -u "$PR_CREATION_ID" -X GET "$BASE_URL/projects/$PROJECT_KEY/repos/$REPO_SLUG/tags/$TAG_NAME" | jq -r '.latestCommit')
+                        
+                        # Determine SOURCE_BRANCH
+                        SOURCE_BRANCH="No valid branch found"
+                        BRANCHES=$(curl -s -u "$PR_CREATION_ID" "$BASE_URL/projects/$PROJECT_KEY/repos/$REPO_SLUG/branches" | jq -r '.values[].displayId')
+                        for BRANCH in $BRANCHES; do
+                            RESPONSE=$(curl -s -u "$PR_CREATION_ID" "$BASE_URL/projects/$PROJECT_KEY/repos/$REPO_SLUG/commits?until=$BRANCH&limit=1000")
+                            if echo "$RESPONSE" | grep -q "$TAG_COMMIT"; then
+                                if [[ $BRANCH == hotfix* || $BRANCH == release/release* ]]; then
+                                    SOURCE_BRANCH=$BRANCH
+                                    break
+                                fi
+                            fi
+                        done
+                        
+                        # Print the extracted variables with a unique prefix
+                        echo "EXTRACT_REQUESTOR_EMAIL=${requestorEmail}"
+                        echo "EXTRACT_TAG_COMMIT=${TAG_COMMIT}"
+                        echo "EXTRACT_SOURCE_BRANCH=${SOURCE_BRANCH}"
+                    ''', returnStdout: true).trim()
+
+                    // Parse the output, filtering only lines that start with "EXTRACT_"
+                    output.split("\\r?\\n").each { line ->
+                        if (line.startsWith("EXTRACT_")) {
+                            def parts = line.split('=', 2)
+                            if (parts.size() == 2) {
+                                // Remove the "EXTRACT_" prefix from the key if desired
+                                def key = parts[0].replace("EXTRACT_", "")
+                                env[key] = parts[1]
+                            }
+                        }
+                    }
+
+                    // Optional: Print out the captured values
+                    echo "Extracted REQUESTOR_EMAIL: ${env.REQUESTOR_EMAIL}"
+                    echo "Extracted TAG_COMMIT: ${env.TAG_COMMIT}"
+                    echo "Extracted SOURCE_BRANCH: ${env.SOURCE_BRANCH}"
+                }
+            }
+        }
+        stage('Use Captured Values in Groovy') {
+            steps {
+                script {
+                    echo "Using in Groovy: REQUESTOR_EMAIL: ${env.REQUESTOR_EMAIL}"
+                    echo "Using in Groovy: TAG_COMMIT: ${env.TAG_COMMIT}"
+                    echo "Using in Groovy: SOURCE_BRANCH: ${env.SOURCE_BRANCH}"
+                }
+            }
+        }
+        stage('Use Captured Values in Shell') {
+            steps {
+                sh '''
+                    echo "Using in Shell: REQUESTOR_EMAIL: $REQUESTOR_EMAIL"
+                    echo "Using in Shell: TAG_COMMIT: $TAG_COMMIT"
+                    echo "Using in Shell: SOURCE_BRANCH: $SOURCE_BRANCH"
+                '''
+            }
+        }
+    }
+}
+
+
+---
+
+Summary
+
+Issue: Other output lines with an equal sign can interfere with our parsing.
+
+Solution: Use a unique prefix (like EXTRACT_) for the environment variable lines you want to capture and filter only those lines in your Groovy code.
+
+Alternative: Redirect extra output to stderr or write to a dedicated file.
+
+
+This method ensures that only the intended key–value pairs are extracted and set as environment variables, regardless of any other output in your shell script.
+
