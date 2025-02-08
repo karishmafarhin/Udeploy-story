@@ -1,0 +1,23 @@
+Subject: uDeploy DEV OKTA Configuration & Password Replacement – Completion & Next Steps
+
+Hi Team,
+
+We are pleased to inform you that the uDeploy DEV OKTA configuration and the password replacement with auth token have been successfully completed and thoroughly validated. The configuration changes have been implemented on all controllers within the scope, and we have received validation responses from all invited teams.
+
+Next Steps:
+
+ECOM-UI Team:
+Please perform the required script changes prior to the actual rollout (communication regarding these changes has already been sent).
+
+App Automation Team:
+Similar script modifications are needed in the JAT script.
+
+
+Thank you for your cooperation. Should you have any questions or need further details, please feel free to reach out.
+
+Best regards,
+
+[Your Name]
+[Your Position]
+[Your Team/Organization]
+
