@@ -1,0 +1,80 @@
+#!/bin/bash
+
+# Configuration
+SERVER1="server1"
+SERVER2="server2"
+REMOTE_USER="your_user"          # Replace with your SSH username
+CSV_FILE_PATH="/path/to/file.csv" # Path to the CSV file on both servers
+TEMP_REMOTE_FILE="/tmp/remote_file.csv"
+MERGED_FILE="/path/to/merged_file.csv"  # Final merged file path
+
+# Determine the target server based on the current hostname
+CURRENT_HOST=$(hostname)
+if [ "$CURRENT_HOST" = "$SERVER1" ]; then
+    TARGET_SERVER="$SERVER2"
+elif [ "$CURRENT_HOST" = "$SERVER2" ]; then
+    TARGET_SERVER="$SERVER1"
+else
+    echo "Unknown hostname: $CURRENT_HOST"
+    exit 1
+fi
+
+echo "Current host: $CURRENT_HOST"
+echo "Target (remote) server: $TARGET_SERVER"
+
+# Check if the CSV file exists locally
+if [ -f "$CSV_FILE_PATH" ]; then
+    echo "Local file exists: $CSV_FILE_PATH"
+    local_exists=true
+else
+    echo "Local file does not exist: $CSV_FILE_PATH"
+    local_exists=false
+fi
+
+# Check if the CSV file exists on the remote server
+ssh "$REMOTE_USER@$TARGET_SERVER" "test -f '$CSV_FILE_PATH'"
+if [ $? -eq 0 ]; then
+    echo "Remote file exists on $TARGET_SERVER: $CSV_FILE_PATH"
+    remote_exists=true
+else
+    echo "Remote file does not exist on $TARGET_SERVER: $CSV_FILE_PATH"
+    remote_exists=false
+fi
+
+# Scenario handling:
+if ! $local_exists && ! $remote_exists; then
+    # Scenario 3: Neither exists.
+    echo "Error: CSV file does not exist on either server."
+    exit 1
+elif ! $local_exists && $remote_exists; then
+    # Scenario 4: Local missing but remote exists, use remote file directly.
+    echo "Local file missing; retrieving remote file."
+    scp "$REMOTE_USER@$TARGET_SERVER:$CSV_FILE_PATH" "$MERGED_FILE"
+    if [ $? -eq 0 ]; then
+        echo "File retrieved from remote server and saved as: $MERGED_FILE"
+    else
+        echo "Error: Failed to retrieve file from remote server."
+        exit 1
+    fi
+elif $local_exists && ! $remote_exists; then
+    # Scenario 5: Only local file exists, use it directly.
+    echo "Remote file missing; using local file directly."
+    cp "$CSV_FILE_PATH" "$MERGED_FILE"
+    echo "Local file copied to: $MERGED_FILE"
+elif $local_exists && $remote_exists; then
+    # Scenario 6: Both files exist; retrieve remote file then merge.
+    echo "Both local and remote files exist. Retrieving remote file for merging."
+    scp "$REMOTE_USER@$TARGET_SERVER:$CSV_FILE_PATH" "$TEMP_REMOTE_FILE"
+    if [ $? -ne 0 ]; then
+        echo "Error: Failed to retrieve remote file."
+        exit 1
+    fi
+    # Merge the files without any data loss.
+    # If headers are present in both, you may want to remove duplicate header lines.
+    cat "$CSV_FILE_PATH" "$TEMP_REMOTE_FILE" > "$MERGED_FILE"
+    echo "Files merged successfully into: $MERGED_FILE"
+    # Cleanup temporary file
+    rm -f "$TEMP_REMOTE_FILE"
+fi
+
+echo "Script completed."
