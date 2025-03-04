@@ -1,0 +1,76 @@
+It looks like there might be an issue with how the script is handling file existence and order of operations. Let's refine it properly to ensure:
+
+1. The header is written only once from the first available file.
+
+
+2. The data from both local and remote files is appended correctly without overwriting.
+
+
+
+Improved Script:
+
+# Check if local file exists
+if [ -f "$CSV_FILE_PATH" ]; then
+    local_exists=1
+else
+    local_exists=0
+fi
+
+# Check if remote file exists
+if [ -f "$TEMP_REMOTE_FILE" ]; then
+    remote_exists=1
+else
+    remote_exists=0
+fi
+
+# If neither file exists, exit
+if [ "$local_exists" -eq 0 ] && [ "$remote_exists" -eq 0 ]; then
+    echo "No CSV file exists on either server."
+    exit 1
+fi
+
+# Create the merged file
+MERGED_FILE="merged_output.csv"
+
+# Determine which file to take the header from
+if [ "$local_exists" -eq 1 ]; then
+    head -n 1 "$CSV_FILE_PATH" > "$MERGED_FILE"  # Take header from local file
+elif [ "$remote_exists" -eq 1 ]; then
+    head -n 1 "$TEMP_REMOTE_FILE" > "$MERGED_FILE"  # If local doesn't exist, take from remote
+fi
+
+# Append data from local file if it exists (excluding header)
+if [ "$local_exists" -eq 1 ]; then
+    tail -n +2 "$CSV_FILE_PATH" >> "$MERGED_FILE"
+fi
+
+# Append data from remote file if it exists (excluding header)
+if [ "$remote_exists" -eq 1 ]; then
+    tail -n +2 "$TEMP_REMOTE_FILE" >> "$MERGED_FILE"
+fi
+
+echo "Merging completed. Output file: $MERGED_FILE"
+
+Fixes and Improvements:
+
+1. Header Selection Logic:
+
+If the local file exists, the header is taken from there.
+
+If the local file doesn’t exist but the remote file does, the header is taken from the remote file.
+
+This prevents skipping the header in the final file.
+
+
+
+2. Appending Data Properly:
+
+Both files' data (excluding headers) are appended.
+
+This avoids overwriting and ensures data is merged properly.
+
+
+
+
+Try this and let me know if you face any issues!
+
