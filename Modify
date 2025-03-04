@@ -1,0 +1,61 @@
+#!/bin/bash
+
+# Define the file path
+CSV_FILE_PATH="/path/to/local_file.csv"
+MERGED_FILE="/path/to/merged_output.csv"
+REMOTE_USER="your_user"
+PRIVATE_KEY="/path/to/private_key"  # Update this with your SSH key path
+
+# Determine the hostname and remote server
+CURRENT_SERVER=$(hostname)
+if [[ "$CURRENT_SERVER" == "server1" ]]; then
+    TARGET_SERVER="server2"
+else
+    TARGET_SERVER="server1"
+fi
+
+# Check if local file exists
+if [ -f "$CSV_FILE_PATH" ]; then
+    local_exists=1
+else
+    local_exists=0
+fi
+
+# Check if the file exists on the remote server using SSH
+ssh -i "$PRIVATE_KEY" "$REMOTE_USER@$TARGET_SERVER" "test -f '$CSV_FILE_PATH'" 
+if [ $? -eq 0 ]; then
+    remote_exists=1
+else
+    remote_exists=0
+fi
+
+# If neither file exists, exit
+if [ "$local_exists" -eq 0 ] && [ "$remote_exists" -eq 0 ]; then
+    echo "No CSV file exists on either server."
+    exit 1
+fi
+
+# Fetch the remote file if it exists
+TEMP_REMOTE_FILE="/tmp/remote_file.csv"
+if [ "$remote_exists" -eq 1 ]; then
+    scp -i "$PRIVATE_KEY" "$REMOTE_USER@$TARGET_SERVER:$CSV_FILE_PATH" "$TEMP_REMOTE_FILE"
+fi
+
+# Create the merged file
+if [ "$local_exists" -eq 1 ]; then
+    head -n 1 "$CSV_FILE_PATH" > "$MERGED_FILE"  # Take header from local file
+elif [ "$remote_exists" -eq 1 ]; then
+    head -n 1 "$TEMP_REMOTE_FILE" > "$MERGED_FILE"  # If local doesn't exist, take from remote
+fi
+
+# Append data from local file if it exists (excluding header)
+if [ "$local_exists" -eq 1 ]; then
+    tail -n +2 "$CSV_FILE_PATH" >> "$MERGED_FILE"
+fi
+
+# Append data from remote file if it exists (excluding header)
+if [ "$remote_exists" -eq 1 ]; then
+    tail -n +2 "$TEMP_REMOTE_FILE" >> "$MERGED_FILE"
+fi
+
+echo "Merging completed. Output file: $MERGED_FILE"
