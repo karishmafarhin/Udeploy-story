@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# Define the input CSV file
+CSV_FILE="bitbucket_users.csv"
+
+# Define the output file for unlicensed users
+OUTPUT_FILE="unlicensed_users.txt"
+
+# Calculate the timestamp for 6 months ago (180 days)
+SIX_MONTHS_AGO=$(date -d "180 days ago" +%s)
+
+# Clear output file
+> "$OUTPUT_FILE"
+
+# Process each line of the CSV file
+while IFS=',' read -r username last_authentication; do
+    # Convert date from DD-MM-YYYY to YYYY-MM-DD
+    formatted_date=$(echo "$last_authentication" | awk -F- '{printf("%s-%s-%s", $3, $2, $1)}')
+    
+    # Convert formatted date to Unix timestamp
+    last_auth_timestamp=$(date -d "$formatted_date" +%s 2>/dev/null)
+    
+    # Skip processing if date conversion fails
+    if [[ -z "$last_auth_timestamp" ]]; then
+        echo "Skipping invalid date for user: $username"
+        continue
+    fi
+
+    # Compare timestamps: if last authentication is older than 6 months, mark the user for unlicensing
+    if [[ "$last_auth_timestamp" -lt "$SIX_MONTHS_AGO" ]]; then
+        echo "$username" >> "$OUTPUT_FILE"
+    fi
+done < "$CSV_FILE"
+
+echo "Users to be unlicensed are listed in $OUTPUT_FILE"
