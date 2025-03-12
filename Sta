@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# Define the input CSV file (without header)
+CSV_FILE="bitbucket_users.csv"
+
+# Define the output CSV file
+OUTPUT_FILE="unlicensed_users.csv"
+
+# Calculate six months ago date in DD-MM-YYYY format
+SIX_MONTHS_AGO_DATE=$(date -d "180 days ago" +"%d-%m-%Y")
+
+# Write header to the output CSV file
+echo "username,last_authentication,six_months_ago" > "$OUTPUT_FILE"
+
+# Process each line of the CSV file
+while IFS=',' read -r username last_authentication; do
+    # Convert dates to comparable format (YYYYMMDD)
+    last_auth_comp=$(date -d "$last_authentication" +"%Y%m%d" 2>/dev/null)
+    six_months_ago_comp=$(date -d "$SIX_MONTHS_AGO_DATE" +"%Y%m%d")
+
+    # Skip processing if date conversion fails
+    if [[ -z "$last_auth_comp" ]]; then
+        echo "Skipping invalid date for user: $username"
+        continue
+    fi
+
+    # Compare dates
+    if [[ "$last_auth_comp" -lt "$six_months_ago_comp" ]]; then
+        echo "$username,$last_authentication,$SIX_MONTHS_AGO_DATE" >> "$OUTPUT_FILE"
+    fi
+done < "$CSV_FILE"
+
+echo "Unlicensed users CSV generated: $OUTPUT_FILE"
