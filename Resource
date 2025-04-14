@@ -1,0 +1,23 @@
+Resource in UrbanCode Deploy (uDeploy)
+
+A Resource is a logical representation of a deployment target — like a server, directory, or cluster — where components are deployed.
+
+
+---
+
+Key Points:
+
+Maps to Agents: Resources are linked to agents that physically execute deployment tasks.
+
+Organized Hierarchically: You can create a tree of resources (e.g., server → directory → component).
+
+Used in Environments: Environments use resources to know where to deploy each component.
+
+Supports Grouping: You can create resource groups for batch deployments or HA setups.
+
+
+
+---
+
+Think of a resource as the “address” where uDeploy sends your app to be deployed — while the agent is the worker at that address.
+
