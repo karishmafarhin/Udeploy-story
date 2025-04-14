@@ -1,0 +1,81 @@
+In UrbanCode Deploy (uDeploy), a component represents a deployable unit of an application. It is the fundamental building block used to model what is being deployed.
+
+
+---
+
+What a Component Is:
+
+A component can be:
+
+A Java .jar, .war, or .ear file
+
+A script or configuration file
+
+A set of Docker images
+
+Any versioned artifact that needs to be deployed
+
+
+
+---
+
+Key Aspects of Components:
+
+1. Versions
+
+Each time you import or build new content for a component, it creates a new version.
+
+You can track, promote, and roll back versions easily.
+
+
+2. Component Processes
+
+Define how to deploy the component (e.g., copy files, restart service, run scripts).
+
+Reusable across different environments.
+
+
+3. Source Configuration
+
+Components can fetch versions from:
+
+Jenkins
+
+Nexus/Artifactory
+
+File system
+
+Git
+
+UrbanCode Build
+
+Or any custom source via plugins
+
+
+
+4. Integration
+
+Linked to applications, which coordinate the deployment of multiple components together.
+
+Mapped to resources/agents to define where it gets deployed.
+
+
+
+---
+
+Example:
+
+If you're deploying a Java web app:
+
+You might have one component for the WAR file
+
+Another for config files
+
+Another for DB migration scripts
+
+
+
+---
+
+Let me know if you want a visual or example setup.
+
