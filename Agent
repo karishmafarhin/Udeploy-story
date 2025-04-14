@@ -1,0 +1,23 @@
+Agent in UrbanCode Deploy (uDeploy)
+
+An Agent is a lightweight program installed on a target system (like a server or VM) that executes deployment tasks sent by the uDeploy server.
+
+
+---
+
+Key Points:
+
+Runs deployment steps like copying files, running scripts, restarting services.
+
+Communicates securely with the uDeploy server.
+
+Can be part of agent pools for load balancing and high availability.
+
+Tied to resources, which are mapped to environments.
+
+
+
+---
+
+Think of an agent as a remote worker that does the hands-on job of deploying your app to a specific machine.
+
