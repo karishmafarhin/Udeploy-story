@@ -1,0 +1,20 @@
+Sure! Here's a short version:
+
+
+---
+
+Environment in uDeploy
+
+An Environment is a deployment target like Dev, QA, or Prod. It defines where an application will be deployed and includes:
+
+Mapped Resources (e.g., servers or containers)
+
+Environment-specific Properties (e.g., credentials, hostnames)
+
+Approval Gates and Access Controls
+
+Tracks deployed component versions
+
+
+Think of it as a stage where your application is deployed and tested.
+
