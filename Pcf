@@ -1,0 +1,6 @@
+Sure! Here's a one-liner for each:
+
+PCF Deployment: Deploys applications to cloud-native Pivotal Cloud Foundry using cf CLI without requiring agents on target platforms.
+
+Non-PCF Deployment: Deploys applications to traditional servers or VMs using uDeploy agents to run scripts, copy files, and manage services.
+
