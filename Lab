@@ -16,3 +16,24 @@ Yuvashree has now confirmed that once HA is fully implemented on the new nodes w
 ---
 
 Let me know if you'd like this shortened or formatted differently.
+
+
+
+Here’s a more concise version of the same message:
+
+
+---
+
+Hi Team,
+The presentation is ready, and lab exercise scenarios are also included.
+
+As shared earlier, we do have a sandbox environment. However, HA is currently enabled there, and the sandbox database is being used by newly added nodes. The license is also tied to those nodes.
+
+Although the sandbox was expected to be ready by Monday post-activity, the activity couldn’t proceed due to Load Balancer issues.
+Yuvashree has confirmed that once HA is fully set up on the new nodes with the DEV DB, she will revert the HA config in the sandbox and reconnect the license.
+
+
+---
+
+Let me know if you'd like to tweak the tone or add anything else.
+
