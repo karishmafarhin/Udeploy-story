@@ -1,0 +1,18 @@
+Sure! Here's a refined version of your message for the group chat:
+
+
+---
+
+Hi Team,
+The presentation is ready, and the lab exercise scenarios have also been captured.
+
+Regarding the lab environment — as mentioned earlier, we do have a sandbox setup. However, since HA (High Availability) is currently enabled in that environment, the sandbox database is being utilized by other new nodes, and the license is also tied to those new nodes.
+
+It was initially promised that the sandbox would be ready by Monday after the planned activity. However, that activity could not proceed due to some issues on the Load Balancer side.
+
+Yuvashree has now confirmed that once HA is fully implemented on the new nodes with the DEV database, she will revert the HA configuration in the sandbox and ensure that the sandbox license is reconnected properly.
+
+
+---
+
+Let me know if you'd like this shortened or formatted differently.
