@@ -1,0 +1,20 @@
+def call() {
+    def resourceUtil = new devops.jenkins.pipeline.utils.resources.LibraryResource(this)
+    def scriptFile = "componentPropertyUpdate.sh"
+
+    resourceUtil.writeStaticFile(scriptFile)
+
+    withCredentials([usernamePassword(credentialsId: 'UCD_CREDS_ID', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+        def result = sh(
+            script: "chmod +x ${scriptFile} && ./componentPropertyUpdate.sh",
+            returnStatus: true
+        )
+
+        if (result != 0) {
+            error "Failed to add the component properties"
+        } else {
+            echo "Component properties added successfully!!"
+            sh "rm -f ${scriptFile}"
+        }
+    }
+}
