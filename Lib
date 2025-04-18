@@ -1,0 +1,15 @@
+package devops.jenkins.pipeline.utils.resources
+
+class LibraryResource implements Serializable {
+    private final Script script
+
+    LibraryResource(Script script) {
+        this.script = script
+    }
+
+    def writeStaticFile(def scriptFileName) {
+        script.writeFile file: "${scriptFileName}", text: script.libraryResource("${scriptFileName}")
+    }
+
+    // Additional methods like readResourceFile(), writeJsonFile() etc. can be here
+}
