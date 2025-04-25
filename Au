@@ -1,0 +1,21 @@
+Here’s a properly drafted version of your note:
+
+
+---
+
+Drafted Version:
+
+The plugin configuration is not supporting Bearer Token authentication after OKTA integration.
+We tested all four available authentication types on that day; however, all methods except Bearer Token were working during the "Test Connection" step. In actual deployment, Bearer Token authentication fails.
+
+Additionally, Bearer Token is not working in curl either.
+Basic authentication is consistently returning a 500 error code in test scenarios, but it works correctly when executed via direct curl commands and through the plugin configuration (with the auth token set as the password).
+
+Therefore, we have decided to continue using Basic Authentication since it is working successfully during deployments.
+
+
+---
+
+Would you also like a slightly more formal version depending on where you need to send this (email, ticket update, documentation)?
+I can give you options!
+
