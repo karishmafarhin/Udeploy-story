@@ -1,0 +1,40 @@
+Here is a version of the email tailored for sending to multiple recipients:
+
+
+---
+
+Subject: Confirmation of Role Owner Details for uDeploy SIAM Integration
+
+Dear Team,
+
+As part of the SIAM integration for the uDeploy application, we have compiled the list of role owners for various teams based on the inputs received from your respective groups. We are reaching out to request your confirmation of the assigned role owner(s) for your team.
+
+Purpose of Role Owners:
+Role owners are responsible for reviewing and approving access requests to uDeploy roles within their team. Once roles are created and onboarded in SIAM, any new access requests will be routed to these role owners for approval. This ensures appropriate access control and aligns with enterprise compliance standards.
+
+SIAM Role Structure and Naming Convention:
+The SIAM team will provision roles in uDeploy aligned with team-based access requirements. Each role will follow a consistent naming pattern for easy identification and governance.
+Example naming conventions include:
+
+udeploy_<teamname>_readonly
+
+udeploy_<teamname>_devopsbuild
+
+udeploy_<teamname>_admin
+
+
+Action Required:
+Please review the role owner details shared with you and confirm their accuracy by [insert date]. If updates are required, kindly respond with the corrected information.
+
+We appreciate your cooperation and support in making this integration successful.
+
+Best regards,
+[Your Name]
+[Your Team/Department]
+[Contact Information]
+
+
+---
+
+Let me know if you'd like this email formatted for a mail merge or if you'd like to attach a sample table of roles and owners.
+
