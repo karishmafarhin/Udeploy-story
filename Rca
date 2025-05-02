@@ -1,0 +1,46 @@
+Certainly! Below is an enhanced and more structured version of your RCA scope, with clearer responsibilities, objectives, and outcomes for each point.  
+
+---  
+
+### **Scope for RCA Analysis of Incidents & Major RITMs**  
+The dedicated RCA review group will focus on the following areas to ensure thorough analysis, resolution, and prevention of recurring issues:  
+
+#### **1. Incidents & RITMs Highlighted in Daily Summary Reports**  
+   - **Objective:** Proactively identify and analyze high-priority incidents and RITMs reported in daily summaries.  
+   - **Actions:**  
+     - Conduct detailed root cause analysis (RCA) for critical incidents.  
+     - Document findings with clear corrective and preventive actions (CAPA).  
+     - Collaborate with respective teams to implement fixes and track effectiveness.  
+   - **Outcome:** Reduce recurrence of major incidents through structured problem-solving.  
+
+#### **2. RITMs Triggered by Build/Deployment Changes**  
+   - **Objective:** Investigate RITMs caused by development or infrastructure changes.  
+   - **In-Scope:**  
+     - Failures due to script updates, configuration changes, or deployment errors.  
+     - Issues arising from enhancements or patches delivered by the Build team.  
+   - **Actions:**  
+     - Validate change management processes for gaps.  
+     - Recommend improved testing, rollback plans, or communication protocols.  
+   - **Outcome:** Strengthen change control to minimize post-deployment defects.  
+
+#### **3. Long-Pending RITMs Requiring Escalation Support**  
+   - **Objective:** Assist the Run team in resolving complex, aged RITMs.  
+   - **In-Scope:**  
+     - Tickets stuck in the Run queue despite exhaustive analysis.  
+     - Recurring issues needing cross-functional expertise.  
+   - **Actions:**  
+     - Provide technical guidance, alternative solutions, or escalation paths.  
+     - Facilitate knowledge transfer to prevent future bottlenecks.  
+   - **Ownership Clarification:**  
+     - **Run team retains ticket ownership**; this group acts in an advisory capacity.  
+   - **Outcome:** Accelerate resolution of stalled tickets while building team capability.  
+
+---  
+
+### **Additional Notes:**  
+- **Exclusions:** Routine/low-impact tickets, non-recurring issues with straightforward fixes.  
+- **Governance:** Monthly review of RCA trends to identify systemic improvements.  
+
+---  
+
+This version adds **clarity, purpose, and accountability** while keeping it concise. Let me know if you'd like further refinements!
