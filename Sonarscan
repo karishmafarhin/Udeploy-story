@@ -1,0 +1,51 @@
+
+Subject: Action Required: Pipeline Changes for Upcoming SonarQube Upgrade (2025.1 LTA)
+
+Dear Team,
+
+As part of the upcoming SonarQube upgrade to version 2025.1 LTA, we request all application teams to update their pipeline scripts to align with the new tool requirements. This is essential to ensure compatibility and uninterrupted scanning post-upgrade.
+
+🔄 Required Updates in Pipeline Scripts (Dev & Prod):
+
+☕ Java Configuration:
+
+Global Tool Name: Java 17.0.15
+
+Path: /appbin/install/jdk/jdk-17.0.15
+
+
+> Update your pipeline scripts to use Java 17.0.15 as the SonarQube 2025.1 version requires Java 17 for successful analysis.
+
+
+
+🔍 Sonar Scanner Configuration:
+
+SonarScanner Tool Name: sonar-scanner-7.1.0.4889
+
+Path: /appbin/install/Sonar/sonar-scanner-7.1.0.4889-linux-x64
+
+
+> Update your scripts to use the above scanner version for both Dev and Prod pipelines.
+
+
+
+
+---
+
+✅ Action Required:
+
+Please ensure the above tool names and paths are updated in your Jenkins or CI pipeline configurations before the upgrade to prevent any scan failures.
+
+Should you need any assistance with the changes, feel free to contact the DevOps team.
+
+Thank you for your attention and timely action.
+
+Best regards,
+[Your Name]
+DevOps Team
+
+
+---
+
+Let me know if you'd like this formatted as an official email or portal post.
+
