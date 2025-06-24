@@ -75,3 +75,28 @@ if (matchedJobs) {
 } else {
     println "\n⚠️ No jobs found using '${targetString}'."
 }
+
+
+
+
+
+def targetString = 'svc_devops_user'  // can be full email, credential ID, or partial string
+def matchedJobs = []
+
+Jenkins.instance.getAllItems(AbstractItem.class).each { job ->
+    try {
+        def configXml = job.getConfigFile().asString()
+        if (configXml.contains(targetString)) {
+            matchedJobs << job.fullName
+        }
+    } catch (Exception e) {
+        println "❌ Error checking ${job.fullName}: ${e.message}"
+    }
+}
+
+if (matchedJobs) {
+    println "\n✅ Jobs where '${targetString}' is used:"
+    matchedJobs.each { println "- ${it}" }
+} else {
+    println "\n⚠️ No jobs found using '${targetString}'."
+}
