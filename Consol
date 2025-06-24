@@ -8,3 +8,35 @@ git add .
 git commit -m "Initial implementation"
 
 git push
+
+
+
+// Replace with your actual service account or credential ID
+def targetString = 'svc_devops_user@company.com'
+
+// Get all jobs in Jenkins
+def allJobs = Jenkins.instance.getAllItems(org.jenkinsci.plugins.workflow.job.WorkflowJob)
+
+def matchedJobs = []
+
+allJobs.each { job ->
+    try {
+        def defn = job.definition
+        if (defn != null) {
+            def script = defn.script
+            if (script?.contains(targetString)) {
+                matchedJobs << job.fullName
+            }
+        }
+    } catch (Exception e) {
+        println "Error while checking job: ${job.fullName}, reason: ${e.message}"
+    }
+}
+
+// Output matched jobs
+if (matchedJobs) {
+    println "Jobs using service account '${targetString}':"
+    matchedJobs.each { println "- ${it}" }
+} else {
+    println "No jobs found using service account '${targetString}'."
+}
