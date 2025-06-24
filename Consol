@@ -40,3 +40,38 @@ if (matchedJobs) {
 } else {
     println "No jobs found using service account '${targetString}'."
 }
+
+
+
+
+import org.jenkinsci.plugins.workflow.job.WorkflowJob
+import org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject
+
+def targetString = 'svc_devops_user@company.com'
+def matchedJobs = []
+
+Jenkins.instance.getAllItems().each { item ->
+    try {
+        if (item instanceof WorkflowJob) {
+            def job = item
+            def defn = job.definition
+            if (defn != null && defn.hasProperty('script')) {
+                def script = defn.script
+                if (script?.contains(targetString)) {
+                    matchedJobs << job.fullName
+                }
+            } else {
+                println "🔍 Skipped '${job.fullName}' — Script not available (SCM based)"
+            }
+        }
+    } catch (Exception e) {
+        println "❌ Error while scanning ${item.fullName}: ${e.message}"
+    }
+}
+
+if (matchedJobs) {
+    println "\n✅ Jobs using '${targetString}':"
+    matchedJobs.each { println "- ${it}" }
+} else {
+    println "\n⚠️ No jobs found using '${targetString}'."
+}
