@@ -1,0 +1,10 @@
+cd /home/ubuntu/1326005-git-initial-commit
+
+git config user.name "Hacker Developer"
+git config user.email "hacker.developer@hackercompany.com"
+
+git add .
+
+git commit -m "Initial implementation"
+
+git push
