@@ -1,0 +1,57 @@
+pipeline {
+    agent any
+
+    environment {
+        CD_URL = 'https://<CLOUDBEES_CD_URL>/rest/v1.0/runUserReport'
+        AUTH_HEADER = 'Authorization: Basic <BASE64_USER_TOKEN>'
+    }
+
+    stages {
+        stage('Get All Users from CD with Pagination') {
+            steps {
+                script {
+                    def offset = 0
+                    def pageSize = 100
+                    def hasMore = true
+                    def allUsers = []
+
+                    while (hasMore) {
+                        def payload = [
+                            actualParameter: [
+                                [actualParameterName: 'offset', value: "${offset}"],
+                                [actualParameterName: 'maxResults', value: "${pageSize}"]
+                            ]
+                        ]
+
+                        def response = httpRequest(
+                            httpMode: 'PUT',
+                            url: env.CD_URL,
+                            customHeaders: [[name: 'Authorization', value: env.AUTH_HEADER]],
+                            requestBody: groovy.json.JsonOutput.toJson(payload),
+                            contentType: 'APPLICATION_JSON',
+                            acceptType: 'APPLICATION_JSON',
+                            quiet: true
+                        )
+
+                        def json = readJSON text: response.content
+                        def users = json?.userReportEntries ?: []
+
+                        allUsers.addAll(users)
+                        echo "Fetched ${users.size()} users"
+
+                        if (users.size() < pageSize) {
+                            hasMore = false
+                        } else {
+                            offset += pageSize
+                        }
+                    }
+
+                    echo "Total users fetched: ${allUsers.size()}"
+                    allUsers.each { entry ->
+                        echo "User: ${entry.userName}, Last Login: ${entry.lastLoginTime}"
+                    }
+                }
+            }
+        }
+    }
+}
