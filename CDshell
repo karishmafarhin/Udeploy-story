@@ -1,0 +1,10 @@
+curl -u "yourUser:yourPass" \
+  -X PUT "https://<cd-url>/rest/v1.0/runUserReport?status=VERIFIED&tool=ci" \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json" \
+  -d '{
+        "actualParameter": [
+          { "actualParameterName": "offset", "value": "0" },
+          { "actualParameterName": "maxResults", "value": "100" }
+        ]
+      }'
