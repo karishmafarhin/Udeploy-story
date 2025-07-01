@@ -1,0 +1,59 @@
+pipeline {
+    agent any
+
+    environment {
+        CD_URL = 'https://<CLOUDBEES_CD_URL>/rest/v1.0/runUserReport'
+        CD_USERNAME = 'yourUsername'
+        CD_PASSWORD = 'yourPassword'
+    }
+
+    stages {
+        stage('Paginated User Fetch from CloudBees CD') {
+            steps {
+                script {
+                    def offset = 0
+                    def pageSize = 100
+                    def hasMore = true
+                    def allUsers = []
+
+                    def auth = "${CD_USERNAME}:${CD_PASSWORD}".bytes.encodeBase64().toString()
+                    def headers = [[name: 'Authorization', value: "Basic ${auth}"]]
+
+                    while (hasMore) {
+                        def requestBody = [
+                            actualParameter: [
+                                [actualParameterName: 'offset', value: "${offset}"],
+                                [actualParameterName: 'maxResults', value: "${pageSize}"]
+                            ]
+                        ]
+
+                        def response = httpRequest(
+                            httpMode: 'PUT',
+                            url: CD_URL,
+                            customHeaders: headers,
+                            contentType: 'APPLICATION_JSON',
+                            acceptType: 'APPLICATION_JSON',
+                            requestBody: groovy.json.JsonOutput.toJson(requestBody),
+                            validResponseCodes: '200'
+                        )
+
+                        def result = readJSON text: response.content
+                        def users = result?.userReportEntries ?: []
+
+                        echo "Fetched ${users.size()} users at offset ${offset}"
+                        allUsers.addAll(users)
+
+                        // Exit loop if last page
+                        hasMore = (users.size() == pageSize)
+                        offset += users.size()
+                    }
+
+                    echo "✅ Total users fetched: ${allUsers.size()}"
+                    allUsers.each { user ->
+                        echo "User: ${user.userName} | Last Login: ${user.lastLoginTime}"
+                    }
+                }
+            }
+        }
+    }
+}
