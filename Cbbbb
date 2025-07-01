@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# ====== CONFIGURATION ======
+CD_URL="https://<CLOUDBEES_CD_URL>/rest/v1.0/runUserReport?format=csv"
+CD_USERNAME="yourUsername"
+CD_PASSWORD="yourPassword"
+OUTPUT_FILE="user_report.csv"
+
+# ====== API CALL ======
+echo "Fetching user report from CloudBees CD..."
+
+response=$(curl -s -w "%{http_code}" -o "$OUTPUT_FILE" \
+  -u "${CD_USERNAME}:${CD_PASSWORD}" \
+  -X PUT "$CD_URL" \
+  -H "Content-Type: application/json" \
+  -H "Accept: text/plain" \
+  -d '{}')
+
+# ====== HANDLE RESPONSE ======
+if [[ "$response" == "200" ]]; then
+  echo "✅ User report successfully downloaded to: $OUTPUT_FILE"
+elif [[ "$response" == "401" ]]; then
+  echo "❌ Authentication failed (401 Unauthorized). Please check your username and password."
+  rm -f "$OUTPUT_FILE"
+else
+  echo "❌ Failed to download report. HTTP status: $response"
+  rm -f "$OUTPUT_FILE"
+fi
