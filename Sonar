@@ -1,0 +1,15 @@
+NOTIFICATION
+Subject: SonarQube Upgrade to Version 2025.1 LTA – Introduction of New Rules & Quality Gates
+
+As part of our ongoing platform enhancement initiatives, we are upgrading SonarQube to version 2025.1 LTA.
+
+The DEV environment is now live with the latest Quality Gates and Rules introduced in this version.
+
+The PROD environment will be upgraded to version 2025.1 LTA on Saturday, but will continue to use the existing rules and quality gates to avoid any immediate impact.
+
+
+We request all Application Teams to thoroughly validate their projects in the SonarQube DEV environment using the new rules and quality gates. This validation phase will span 6 months, providing sufficient time for teams to assess the impact of these changes and address any issues before they are promoted to production.
+
+After successful completion of the 6-month validation period, we will enable the new rules and quality gates in the PROD environment, ensuring a smooth and controlled rollout with minimal disruption.
+
+For any queries, please reach out to @DevOps Support.
