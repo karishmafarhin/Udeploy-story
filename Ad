@@ -1,0 +1,68 @@
+To fetch the Active Directory (AD) groups available at the CloudBees CJOC (Operations Center) level, you can use the following Groovy script in the CloudBees CI Script Console (CJOC > Manage Jenkins > Script Console):
+
+✅ Script to List AD Groups Configured in CJOC:
+
+import jenkins.model.*
+import hudson.security.*
+import com.cloudbees.opscenter.security.*
+
+def instance = Jenkins.getInstance()
+
+// Get the security realm configured in CJOC
+def securityRealm = instance.getSecurityRealm()
+
+if (securityRealm instanceof ActiveDirectorySecurityRealm) {
+    println "Active Directory Domain(s): ${securityRealm.domains*.name}"
+
+    // AD group details can't be fully listed directly unless they are already used in Role/Group mappings.
+    println "Note: Full listing of all AD groups is not possible directly unless queried from AD itself."
+
+} else if (securityRealm instanceof com.michelin.cio.hudson.plugins.rolestrategy.RoleBasedAuthorizationStrategy) {
+    println "Role Strategy Plugin is used. Cannot extract AD groups directly."
+
+} else {
+    println "Security realm is not Active Directory. Found: ${securityRealm.class}"
+}
+
+🔍 Notes:
+
+This script will show you the AD domain(s) configured in CJOC, but it cannot enumerate all AD groups unless they are referenced in roles or permissions (because CloudBees doesn’t cache full AD group lists for performance/security reasons).
+
+If you’re using Role-Based Authorization Strategy, AD groups may be defined in role assignments — you can extract those separately (let me know if needed).
+
+For full AD group listings, you typically need to query AD directly via LDAP or an external script/tool (e.g., PowerShell or Python with LDAP libraries).
+
+
+
+---
+
+✅ Optional: Script to Get Groups Used in Role Assignments
+
+import com.michelin.cio.hudson.plugins.rolestrategy.*
+
+def strategy = Jenkins.instance.getAuthorizationStrategy()
+
+if (strategy instanceof RoleBasedAuthorizationStrategy) {
+    def allGroups = [] as Set
+    def roleMaps = strategy.getRoleMaps()
+
+    roleMaps.each { type, roleMap ->
+        roleMap.getGrantedRoles().each { role, sids ->
+            sids.each { sid ->
+                if (!sid.startsWith("user:")) {
+                    allGroups << sid
+                }
+            }
+        }
+    }
+
+    println "Groups referenced in role strategy:"
+    allGroups.each { println "- ${it}" }
+} else {
+    println "Not using Role-Based Authorization Strategy."
+}
+
+This second script will print only the AD groups that are actually used in the role strategy configuration.
+
+Let me know if you need to fetch this from Managed Controllers or want to cross-check against a particular domain.
+
