@@ -10,3 +10,26 @@ if (realm instanceof hudson.plugins.active_directory.ActiveDirectorySecurityReal
 } else {
     println "Security realm is not Active Directory. Found: ${realm.class}"
 }
+
+
+
+import com.michelin.cio.hudson.plugins.rolestrategy.*
+
+def strategy = Jenkins.instance.getAuthorizationStrategy()
+
+if (strategy instanceof RoleBasedAuthorizationStrategy) {
+    def groupSIDs = [] as Set
+    strategy.roleMaps.each { type, roleMap ->
+        roleMap.grantedRoles.each { role, sids ->
+            sids.each { sid ->
+                if (!sid.startsWith("user:")) {
+                    groupSIDs << sid
+                }
+            }
+        }
+    }
+    println "AD groups referenced in roles:"
+    groupSIDs.each { println "- ${it}" }
+} else {
+    println "Not using Role-Based Authorization Strategy."
+}
