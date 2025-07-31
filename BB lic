@@ -1,0 +1,12 @@
+RCA:
+Bitbucket had a license for 6,000 users, and the team had requested an upgrade to a 7,000-user license. While processing this request, the plugin license upgrade was missed. When the main Bitbucket license was upgraded successfully, the plugin license remained outdated, which impacted all the plugins in Bitbucket. As a result, users faced issues with login, code commits, branch creation, and repository access.
+
+Workaround:
+We temporarily disabled the Soteri plugin until the upgraded plugin license was in place.
+
+Resolution:
+Praneeth worked with Sudhanwa from the Office of Agile team to get the upgraded license for the plugins. This allowed the application team to resume code commits and other operations. The license for both users and plugins has now been successfully upgraded.
+
+As an immediate temporary fix, the Soteri plugin was disabled in Bitbucket to prevent it from blocking user activities. This allowed users to at least log in and perform limited operations while the licensing issue was being investigated and resolved. Although some plugin-related features were unavailable during this period, disabling the plugin helped reduce the overall impact and ensured partial functionality for the teams.
+
+
