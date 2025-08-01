@@ -1,0 +1,13 @@
+Here’s a cleaner and more professional version of the message shown in the image:
+
+
+---
+
+uDeploy Upgrade:
+We still have agents running on version 7.0.5 in both uDeploy DEV (400+) and PROD (1000+) environments. IBM has confirmed that this version is no longer supported. The version we plan to upgrade to is 7.13.2, but to reach that, we must first upgrade to 7.2.3. This process requires coordination with the respective application teams to upgrade the agents accordingly. We are currently analyzing the best approach to perform this upgrade in phases.
+
+
+---
+
+Let me know if you'd like to add a timeline, risk note, or action plan.
+
