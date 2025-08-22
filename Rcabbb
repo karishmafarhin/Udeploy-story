@@ -1,0 +1,72 @@
+Root Cause Analysis (RCA) – Service Accounts Removed from Bitbucket
+
+Context
+
+The cleanup script has been auto-scheduled and running for ~4 months and has never deleted any service account until these 3 isolated instances.
+
+In these cases, the service accounts disappeared from stash-users and then reappeared after 2–3 days.
+
+No logs were traced showing the disappearance or reappearance of these accounts in the stash-users group, making the behavior intermittent and untraceable.
+
+
+
+---
+
+Timeline of Events
+
+Day 0 – Cleanup script executed as per schedule.
+
+Script identified the service accounts as inactive/unlicensed because they were not found in stash-users.
+
+Accounts were removed from their assigned projects and repositories.
+
+
+Day 1–2 – Service accounts still missing from stash-users.
+
+Script continued to run daily but skipped further action as the accounts were already removed.
+
+
+Day 2–3 – Service accounts automatically reappeared in stash-users.
+
+No logs traced regarding disappearance or reappearance in group membership.
+
+
+Day 3+ – Investigation initiated after noticing missing service accounts in repositories.
+
+RCA confirmed issue was due to temporary visibility gap in directory sync, not due to a direct deletion by Bitbucket or admins.
+
+
+
+
+---
+
+5 Whys Analysis
+
+Why 1: Why were service accounts removed from projects and repositories?
+Because the cleanup automation script deleted them during its scheduled run.
+
+Why 2: Why did the cleanup script delete the service accounts?
+Because it flagged them as unlicensed/inactive users based on group membership checks.
+
+Why 3: Why were they flagged as unlicensed/inactive?
+Because at execution time, the script could not find these accounts in the default stash-users group.
+
+Why 4: Why were the service accounts not found in stash-users at that time?
+Because of intermittent AD/LDAP sync delays/visibility gaps, which caused the accounts to temporarily drop from stash-users and reappear 2–3 days later.
+
+No audit logs captured these disappearances or reappearances, leaving the issue untraceable at the Bitbucket side.
+
+
+Why 5: Why did the script not prevent removal in these temporary conditions?
+Because the script’s logic relies on stash-users presence and, although it skips service accounts when they’re visible, it did not include a safeguard to skip service accounts when they are temporarily not visible in stash-users.
+
+
+---
+
+Preventive Actions
+
+Update automation logic to always skip service accounts, even if they’re not found in stash-users at run time.
+
+Coordinate with AD/LDAP team to monitor/stabilize sync so accounts don’t intermittently drop from stash-users.
+
+Implement monitoring and alerting for any service account removal from projects and repositories, so corrective action can be taken immediately if it occurs.
