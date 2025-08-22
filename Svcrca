@@ -1,0 +1,33 @@
+Root Cause Analysis (RCA)
+
+Issue Summary
+
+Three service accounts used in Nexus were unintentionally removed from Bitbucket projects and repositories. The cleanup script identified them as inactive/unlicensed because they were missing from the stash-users group, triggering their removal.
+
+Detailed Analysis
+
+1. As part of the ongoing LDAP to OKTA migration, all application teams were requested to validate their service accounts for authentication.
+
+
+2. During this process, the ECOM service accounts were not enabled in OKTA. This led to authentication issues where these accounts could not authenticate to tools.
+
+
+3. The ECOM team raised a ticket with the SecAdmin team to enable OKTA for these service accounts.
+
+
+4. OKTA/LDAP integration was performed, but the OU (Organizational Unit) values of the service accounts were changed during the process.
+
+
+5. Due to the OU change, the service accounts were temporarily removed from LDAP, which resulted in their disappearance from the stash-users group in Bitbucket.
+
+
+6. Since the accounts were not found in stash-users, the automation cleanup script treated them as unlicensed users and removed them from projects and repositories.
+
+
+7. After further investigation with the OKTA and SecAdmin teams, the issue was identified and fixed by reverting the OU values to their original state.
+
+
+8. Once the OU values were corrected, the service accounts were restored back into LDAP, became able to authenticate again, and were auto-added back to the stash-users group.
+
+
+9. The accounts then reappeared in Bitbucket and were usable again.
