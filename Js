@@ -1,0 +1,13 @@
+jq -r '
+  def recurseFolders(path):
+    if (._class == "com.cloudbees.hudson.plugins.folder.Folder") then
+      # print current folder path
+      (path + "/" + .name),
+      # if jobs array exists, recurse deeper
+      (.jobs[]? | recurseFolders(path + "/" + .name))
+    else
+      empty
+    end;
+
+  .jobs[]? | recurseFolders("")
+' jobs.json > folders.txt
