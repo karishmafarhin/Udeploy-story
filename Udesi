@@ -1,0 +1,28 @@
+Dear Application Teams,
+
+As part of the standardization of access management across enterprise tools, uDeploy access provisioning will now be managed through SIAM. Going forward, all requests for access to uDeploy must be raised as an RITM in SIAM.
+
+The following entitlements will be available for request:
+
+uDeploy-Users → Default role for general access.
+
+uDeploy-Administrators → Admin role, applicable only for approved users.
+
+
+Access Request Process:
+
+New Users / Team-level Access: Any new users requiring access to uDeploy, or users who need access to a specific team, must raise an RITM with the SIAM team.
+
+Existing Users / Application or Component-level Access: Users who already have access but need additional permissions (such as access to specific applications or components) must reach out to the DevOps team along with a valid RITM.
+
+
+We are also attaching:
+
+1. Teams and their mapped roles in SIAM
+
+
+2. Application-specific teams list
+
+
+
+For any questions or support, please reach out to the DevOps Support team.
