@@ -1,0 +1,19 @@
+#!/bin/bash
+
+csv_file="file.csv"
+
+# Skip header, process each row
+tail -n +2 "$csv_file" | while IFS=, read -r controller type path group childgroup url users
+do
+    # Clean quotes/spaces
+    childgroup=$(echo "$childgroup" | tr -d ' "')
+    users=$(echo "$users" | tr -d ' "')
+
+    # Create file for this childgroup
+    filename="users_${childgroup}.txt"
+
+    # Split users by comma into lines
+    echo "$users" | tr ',' '\n' > "$filename"
+
+    echo "Created $filename"
+done
