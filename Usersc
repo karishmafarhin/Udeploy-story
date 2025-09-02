@@ -1,0 +1,26 @@
+#!/bin/bash
+
+csv_file="file.csv"
+users_column="Users"   # change this to your actual column header
+
+# Get the column number for "Users"
+col_num=$(head -1 "$csv_file" | tr ',' '\n' | nl -w1 -s, | grep -w "$users_column" | cut -d, -f1)
+
+# Skip header and process each row
+tail -n +2 "$csv_file" | while IFS=, read -r line; do
+    # Extract Users column for this row
+    users=$(echo "$line" | awk -F',' -v c="$col_num" '{print $c}')
+
+    # Clean and split users into lines
+    echo "$users" | tr -d '"' | tr ',' '\n' > users.txt
+
+    echo "Created users.txt for row:"
+    cat users.txt
+
+    # ---- Perform your action here ----
+    # Example: call another script
+    sh your_action.sh users.txt
+
+    echo "Action completed for row"
+    echo "--------------------------------"
+done < "$csv_file"
