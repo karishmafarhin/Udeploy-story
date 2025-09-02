@@ -1,0 +1,28 @@
+#!/bin/bash
+
+csv_file="file.csv"
+
+# Use awk to parse CSV with quoted multiline fields
+awk -v RS='\r?\n' -v FS=',' '
+NR==1 { next }  # Skip header
+{
+    # Extract fields
+    controller=$1
+    type=$2
+    path=$3
+    group=$4
+    childgroup=$5
+    url=$6
+
+    # Users column (handle multiline with quotes)
+    users=$7
+    for (i=8; i<=NF; i++) users=users FS $i
+
+    # Remove surrounding quotes if any
+    gsub(/^"|"$/, "", users)
+
+    # Write users into file
+    filename="users_" childgroup ".txt"
+    print users > filename
+    close(filename)
+}' "$csv_file"
