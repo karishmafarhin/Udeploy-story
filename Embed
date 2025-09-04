@@ -1,0 +1,23 @@
+#!/bin/bash
+
+input="file.csv"
+
+# Skip header and process each row
+awk -F',' 'NR>1 {
+    # childgroup is column 5
+    childgroup=$5
+
+    # users is column 7
+    users=$7
+
+    # remove leading/trailing quotes
+    gsub(/^"|"$/, "", users)
+
+    # replace embedded newlines (\r or \n) with real newlines
+    gsub(/\\r/, "\n", users)
+    gsub(/\\n/, "\n", users)
+
+    # write to file
+    filename = "users_" childgroup ".txt"
+    print users > filename
+}' "$input"
