@@ -1,0 +1,57 @@
+Got it 👍 — you want to clearly highlight that the profiles are not inherited, so vendor should explain why they still got impacted, and you need guidance on identifying modified rules + possible workarounds. Here’s the refined draft with that point added:
+
+
+---
+
+Subject: Post-upgrade quality profile changes – reproducible after fixing test env
+
+Hi [Vendor],
+
+Thanks for the detailed response. A few clarifications and our current findings:
+
+About the Aug 22 analysis (test env):
+The run we shared from Aug 22 occurred right after the test environment upgrade and did not complete a full Sonar analysis. We had failures in the Sonar scan stage at that time, which is why the updated quality profiles and modified rules weren’t visible then. Those failures were intermittent and are not related to the issue we’re reporting—please ignore them.
+
+After fixing test env and revalidating:
+We resolved the scan-stage failures in test and re-ran validations across multiple pipelines and different build types. The same behavior we see in prod post-upgrade is consistently reproducible in test now:
+
+Rules within our custom quality profiles appear modified/deactivated after the upgrade.
+
+These changes are not reflected in any changelog that we can access.
+
+
+On changelogs vs backups:
+We understand the quality profile changelog isn’t downloadable. Earlier we shared the backup of the quality profiles. In addition, we have now manually captured the quality profile change history from the UI and attached it here for your reference.
+
+On new code vs overall code analysis:
+As per our application teams’ requirements, we perform new code analysis in the dev environment and overall code analysis in production. This approach is by design and cannot be changed, so the behavior we’re seeing should be considered in this context.
+
+On deactivated vs modified rules:
+While we understand that some rules may get deactivated post-upgrade (and we can accept that), what concerns us is that certain rules in our custom quality profiles (not inherited from parent profiles) appear to be modified after the upgrade. This behavior is unexpected and not something we can trace through the UI.
+
+
+Request for guidance:
+Could you please advise us on:
+
+1. How to identify which rules were modified in these custom profiles after the upgrade.
+
+
+2. Why custom profiles (not inherited) would still be impacted.
+
+
+3. If possible, suggest a workaround or best practice (e.g., removing such modified rules from the profiles or an alternate approach to lock them down) so that we can stabilize our quality profiles and avoid further unexpected changes.
+
+
+
+We’re happy to provide additional details or host a session to demonstrate the behavior.
+
+Regards,
+[Your Name]
+[Team/Org]
+[Contact]
+
+
+---
+
+Do you want me to keep the request as open-ended (asking vendor to suggest options), or should I word it more assertively (asking vendor for a concrete fix/workaround)?
+
