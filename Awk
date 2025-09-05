@@ -1,0 +1,24 @@
+#!/bin/bash
+
+csv_file="file.csv"
+outdir="output"
+mkdir -p "$outdir"
+
+# Skip header
+tail -n +2 "$csv_file" | awk -F',' '
+BEGIN { OFS="," }
+{
+  # Remove surrounding quotes on fields
+  gsub(/^"|"$/, "", $5)   # childgroup
+  gsub(/^"|"$/, "", $7)   # users
+
+  childgroup=$5
+  users=$7
+
+  # Replace Windows-style CR if any
+  gsub(/\r/, "", users)
+
+  # Write to file named by childgroup
+  file = "output/users_" childgroup ".txt"
+  print users > file
+}'
