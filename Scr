@@ -1,0 +1,15 @@
+#!/bin/bash
+
+input="file.csv"
+row=0
+
+# Use awk to properly handle CSV quoting and multi-line users
+awk -F',' 'NR>1 {
+    row++
+    # field 7 = users, field 5 = childgroup
+    users=$7
+    gsub(/"/,"",users)       # remove quotes
+    gsub(/\r/,"",users)      # remove CR if Windows file
+    file="users_"$5".txt"    # childgroup-based filename
+    print users > file
+}' "$input"
