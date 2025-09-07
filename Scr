@@ -42,3 +42,28 @@ while IFS= read -r line; do
 done < "$csv_file"
 
 
+#!/bin/bash
+
+input="yourfile.csv"
+
+current_file=""
+
+# Skip header (if first line has column names)
+tail -n +2 "$input" | while IFS=',' read -r childgroup users; do
+    
+    # If new childgroup is found, switch to new file
+    if [[ -n "$childgroup" ]]; then
+        current_file="${childgroup}.txt"
+        echo "Switching to file: $current_file"
+        > "$current_file"   # clear file before writing
+    fi
+
+    # Only write users if a file is set
+    if [[ -n "$current_file" && -n "$users" ]]; then
+        IFS=';' read -ra userlist <<< "$users"
+        for u in "${userlist[@]}"; do
+            echo "$u" >> "$current_file"
+        done
+    fi
+done
+
