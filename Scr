@@ -13,3 +13,32 @@ awk -F',' 'NR>1 {
     file="users_"$5".txt"    # childgroup-based filename
     print users > file
 }' "$input"
+
+
+#!/bin/bash
+
+csv_file="file.csv"
+
+row=1
+while IFS= read -r line; do
+    # Skip header
+    if [ $row -eq 1 ]; then
+        row=$((row+1))
+        continue
+    fi
+
+    # Extract childgroup (5th field) safely
+    childgroup=$(echo "$line" | awk -F',' '{print $5}')
+
+    # Extract everything after the 7th column start till end of quotes
+    users=$(echo "$line" | cut -d',' -f7- | sed 's/^"//; s/"$//')
+
+    echo "Row $row -> ChildGroup: $childgroup"
+    echo "Users raw:"
+    echo "$users"
+    echo "------------------------"
+
+    row=$((row+1))
+done < "$csv_file"
+
+
