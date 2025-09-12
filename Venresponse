@@ -1,0 +1,5 @@
+We tried the workaround of exporting the quality profile XML before the upgrade and restoring it afterwards, then running the analysis. But the same issue still comes up when scanning overall code. Unless we accept those issues, the Sonar scan keeps failing, so this approach doesn’t really solve the problem.
+
+Because of this, we won’t be able to go ahead with the planned dry run next weekend.
+
+For next steps, do you think we can work with the application teams during the development environment freeze to validate this further? That might help us move forward without waiting too long.
