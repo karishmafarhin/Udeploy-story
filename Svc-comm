@@ -1,0 +1,12 @@
+Dear Team,
+
+All application teams using their own service accounts for DevOps tool integrations or automations (e.g., Bitbucket, Nexus, Jenkins, etc.) must use dedicated service accounts per tool or automation and not reuse the same account across multiple tools.
+
+Service accounts should be properly documented and owned by respective teams.
+
+Review existing setups and update them where required.
+
+If your team is not currently using any service accounts, please ignore this message. This guideline will apply if you plan to use them in the future.
+
+
+For support in creating new service accounts, reach out to the DevOps/Platform team.
