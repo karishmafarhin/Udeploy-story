@@ -1,0 +1,22 @@
+Dear Team,
+
+As part of the upcoming uDeploy version upgrade, it is mandatory to upgrade the uDeploy agents installed on your Dev and Prod application servers. This upgrade is a prerequisite and must be completed by all application teams to ensure compatibility and uninterrupted deployments after the platform upgrade.
+
+Action Required from Application Teams:
+
+1. Upgrade the uDeploy agent on your respective servers by following the step-by-step guide documented here: [Confluence Page Link].
+
+
+2. Complete the upgrade no later than [Insert Deadline, e.g., 15-Oct-2025].
+
+
+3. Validate the agent post-upgrade to confirm it is functioning correctly.
+
+
+
+Note:
+Teams that do not upgrade their agents by the deadline may experience deployment failures after the uDeploy version upgrade.
+
+For any issues or support during the agent upgrade, please contact the DevOps/Platform team.
+
+Your timely cooperation is essential for the success of this upgrade.
