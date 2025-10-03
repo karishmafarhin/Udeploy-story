@@ -1,0 +1,39 @@
+Dear Team,
+
+As part of the upcoming uDeploy version upgrade, it is mandatory to upgrade the uDeploy agents installed on your Dev and Prod application servers. This upgrade is a prerequisite and must be completed by all application teams to ensure compatibility and uninterrupted deployments after the platform upgrade.
+
+Why this upgrade is required:
+
+The current agent version 7.0.5 has reached end-of-life and is no longer supported by the vendor.
+
+All agents must be upgraded to version 7.2.3, which is the last version that supports JDK 8 and below.
+
+Since many agents are still running on JDK 8, this intermediate upgrade (7.0.5 → 7.2.3) is required.
+
+From 7.2.3 onwards, the Platform/DevOps team will manage and control the Java version for the agents. Application teams will no longer need to handle Java upgrades — this will be taken care of centrally by DevOps.
+
+The upcoming uDeploy version requires Java 11 as the minimum supported version, and this transition will be managed by the Platform/DevOps team.
+
+
+Action Required from Application Teams:
+
+1. Upgrade the uDeploy agent on your respective servers from 7.0.5 to 7.2.3 by following the step-by-step guide documented here: [Confluence Page Link].
+
+
+2. Complete the upgrade no later than [Insert Deadline, e.g., 15-Oct-2025].
+
+
+3. Validate the agent post-upgrade to confirm it is functioning correctly.
+
+
+
+Note:
+
+Teams that do not upgrade their agents by the deadline may experience deployment failures after the uDeploy version upgrade.
+
+Please refer to the attached agent list which specifies all servers that require the upgrade.
+
+
+For any issues or support during the agent upgrade, please contact the DevOps/Platform team.
+
+Your timely cooperation is essential for the success of this upgrade.
