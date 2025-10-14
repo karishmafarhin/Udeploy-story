@@ -1,0 +1,7 @@
+As part of our access control improvements in uDeploy, we have created a restricted_access team and removed all privileges to prevent direct deployments to Prod.
+
+During our review, we identified a few resources where both Dev and Prod agents are mapped under the same resource. This setup is causing access restrictions intended for Prod to also affect Dev deployments.
+
+To address this, we plan to create separate resources for Dev agents in these identified cases. This will ensure smooth Dev deployments while maintaining proper access control for Prod environments.
+
+Kindly review and provide your sign-off to proceed with this activity.
