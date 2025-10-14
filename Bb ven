@@ -1,0 +1,31 @@
+We (Bitbucket support team) are raising this case on behalf of an application team that is using the Automation Anywhere (RPA) tool to push code changes to Bitbucket using a Non-Personal Account (NPA).
+
+This setup was working fine until September 2024. After that, the push operation started failing with the below error:
+
+git push dry run failed, user doesn't have push access on the git repo
+
+Observations & Troubleshooting Done:
+
+The NPA account has Write permissions on the repository.
+
+We also tried granting Admin privileges, but the same error persists.
+
+Authentication is working fine — the NPA can successfully log in to Bitbucket from the RPA tool, and we can see “active a moment ago” status during the authentication attempt.
+
+The failure occurs only during the git push operation from Automation Anywhere.
+
+No configuration changes have been made on Bitbucket during this period.
+
+
+Request for Assistance:
+Please help us identify the root cause and confirm if there have been any changes or updates in Bitbucket authentication or Git push behavior post-September 2024 that could be impacting integrations with Automation Anywhere or similar RPA tools.
+
+Additional Details:
+
+Application: Automation Anywhere (RPA)
+
+Account Type: Non-Personal Account (Service Account)
+
+Bitbucket Type: [Specify: Server / Data Center / Cloud]
+
+Repository: [Provide repo name or URL if required]
