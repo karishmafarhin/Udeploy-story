@@ -1,0 +1,22 @@
+Dear Team,
+
+Following our joint troubleshooting session with the vendor and your team, here’s a summary of our findings and next steps:
+
+1. QA Repository Issue:
+The issue with the QA repository is not related to Bitbucket. It appears to be caused by an application-side problem within Automation Anywhere. We request your team to check this further with your Automation Anywhere vendor.
+
+
+2. Sandbox Repository:
+The connectivity issue in the sandbox environment was due to SSL certificate validation. Once the SSL verification was disabled (sslVerify=false in Git), the connection to Bitbucket was successful, and code push to the test branch worked as expected.
+
+
+3. Branching & Repository Standards:
+We observed that your team is pushing changes directly to the master branch, which is not a recommended practice. Master branch is now protected with restrictions as per our standard governance policy.
+
+We request you to follow the standard branch permissions and repository template recommended by the Bitbucket team.
+
+If there is a specific business requirement to be exempted from these restrictions, please obtain SVP-level approval along with a clear business justification and share it with us for review.
+
+
+
+Please review the above and proceed accordingly. Let us know once the QA-side investigation with your vendor is complete or if you need any further support from our side.
