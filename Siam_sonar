@@ -1,0 +1,30 @@
+Below is our response to the proposed approach:
+
+1. Regarding Point 1:
+Sending an email to every user without first validating their existence in the SonarQube application is not an appropriate approach. This can lead to unnecessary notifications and confusion for users who already exist in the system.
+
+
+2. Regarding Point 2:
+The suggestion that the SonarQube team should manually verify user existence and then approve the request is not aligned with the SIAM automated workflow. This introduces manual intervention, which we do not recommend or encourage, especially since the intention is to streamline the process through SIAM automation.
+
+
+3. Regarding Point 3:
+We are aligned with the third point and have no concerns.
+
+
+
+
+---
+
+Our Recommendation
+
+We propose that the user validation step be handled on the SIAM side to maintain a fully automated flow:
+
+When the user submits a request, SIAM should trigger an API call to SonarQube to fetch the list of users and validate the requester’s SSO existence.
+
+If the user does not exist in SonarQube, SIAM should automatically trigger an email to the user with the account creation instructions and then allow them to place the SIAM request.
+
+If the user already exists, SIAM should directly allow the request submission and proceed with access provisioning once the reporting manager approves it.
+
+
+With this approach, no manual intervention from the SonarQube team is required, and the entire process remains consistent with the SIAM automation model.
