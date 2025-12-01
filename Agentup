@@ -1,0 +1,7 @@
+As part of the uDeploy version upgrade from 7.0.5 to 7.3.2, the intermediate agent upgrade from 7.0.5 to 7.2.3 has already been completed for a few of your agents.
+
+We now need to proceed with the next step—upgrading the agent version from 7.2.3 to 7.3.2. This activity will be performed from the DevOps side using bulk actions from the UI. Please note that each agent will undergo a restart during the upgrade, resulting in an estimated downtime of approximately 2 minutes.
+
+We request your sign-off/approval to proceed with this upgrade.
+
+A prior notification will be sent before we initiate the agent upgrade activity.
