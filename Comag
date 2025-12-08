@@ -1,0 +1,4 @@
+Please ensure that the same agent is not already registered in the QA uDeploy instance with the same installation path.
+If duplicate agents exist with identical paths, it can cause connectivity and registration conflicts during agent communication.
+
+Kindly review the QA uDeploy console, and if you find any duplicate agents pointing to the same path, you may proceed to remove the duplicates to avoid issues.
