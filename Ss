@@ -1,0 +1,7 @@
+1. SSL Certificate Import
+No manual SSL certificate import is required on the Java we installed.
+This Java was uploaded under Managed Java Packages, and uDeploy handles SSL communication through the server-side certificate configuration. No action is required in DEV or PROD.
+
+2. Java Installation Path
+The Java installed via the uDeploy UI cannot be placed under /appbin/install.
+Once added as a Managed Java Package, uDeploy controls the installation path internally and uses that managed location for agent compatibility and future upgrades. Custom installation paths are not supported.
