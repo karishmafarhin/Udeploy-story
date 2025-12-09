@@ -26,3 +26,47 @@ We need your help to understand:
 
 
 This issue is not related to manual user creation on our side, and we request your guidance in identifying the root cause within SonarQube.
+
+
+
+
+
+
+
+Thanks for your response.
+
+First, I would like to clarify that I did understand your earlier comment — but our situation does not match what you’re calling “default behaviour.”
+
+No users were ever created manually from our side.
+
+For many months, all SSO users were getting their SSO ID as the login in SonarQube.
+
+Only recently, some new SSO users started getting an internal alphanumeric login instead.
+
+
+So if this is truly the default behaviour, then our question is:
+
+Why did this not happen earlier, and why is it happening only for some new users now?
+
+
+---
+
+Additional point regarding SIAM integration
+
+We are currently working on integrating SIAM for access provisioning.
+The SIAM team uses the SonarQube login value in API calls to assign users to groups.
+
+Earlier → login was always SSO ID → API calls worked fine
+
+Now → login is alphanumeric for some users → API logic breaks
+
+
+So we need guidance on the following:
+
+1. Can this “default behaviour” be overridden so that SonarQube always uses the SSO username as the login?
+
+
+2. Which attribute from SAML should we rely on for API calls to consistently identify the user’s SSO ID?
+
+
+3. If SonarQube insists on generating internal logins, how do we reliably map them back to the user’s SSO ID for API operations?
