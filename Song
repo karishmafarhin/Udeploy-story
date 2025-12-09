@@ -70,3 +70,36 @@ So we need guidance on the following:
 
 
 3. If SonarQube insists on generating internal logins, how do we reliably map them back to the user’s SSO ID for API operations?
+
+
+
+
+
+
+
+
+
+
+
+Okay, got it. So this behaviour is specific to version 9.9.
+
+Since we cannot override the default behaviour, we would like to understand the following regarding the externalLogin value, which holds the SSO ID in our case:
+
+Will the externalLogin attribute remain consistent and stable for users?
+
+Can we rely on this attribute going forward, or is there any possibility that it may change in future SonarQube versions?
+
+
+As the internal login value is no longer usable for us, we need a reliable attribute that consistently represents the user’s SSO ID. At the moment, externalLogin seems to be the only alternate option.
+
+Kindly confirm if it is safe to use externalLogin for integrations like SIAM and API-based access provisioning.
+
+
+
+
+
+
+
+
+
+
