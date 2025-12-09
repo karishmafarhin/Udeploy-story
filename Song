@@ -1,0 +1,28 @@
+Hi Team,
+
+We would like to clarify that we have not created any users manually in SonarQube. All users are onboarded exclusively through Okta SSO, as SAML integration has been in place for many months.
+
+In our current configuration:
+
+Users authenticate only via Okta SSO
+
+The SAML User Login Attribute in SonarQube is set to userName
+
+The Okta/SAML team has confirmed that Okta is sending the expected userName attribute, and that the alphanumeric login value is not coming from Okta
+
+
+Despite this, SonarQube is generating internal alphanumeric login values for some new users.
+
+We need your help to understand:
+
+1. Why SonarQube is assigning an internal alphanumeric login even when the user is logging in through Okta SSO with the correct SAML attributes.
+
+
+2. What conditions cause SonarQube to ignore the SAML-provided login attribute and instead generate a unique internal ID.
+
+
+3. What configuration or logs we should check to identify the exact reason behind this behavior.
+
+
+
+This issue is not related to manual user creation on our side, and we request your guidance in identifying the root cause within SonarQube.
