@@ -17,3 +17,15 @@ Jenkins.instance.getAllItems(com.cloudbees.opscenter.server.model.ConnectedMaste
 }
 
 return allControllers.sort()
+
+
+import jenkins.model.Jenkins
+import com.cloudbees.opscenter.server.model.ConnectedMaster
+
+def controllers = Jenkins.instance.getAllItems(ConnectedMaster)
+
+controllers.each { c ->
+    println c.getDisplayName()
+}
+
+
