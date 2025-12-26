@@ -45,6 +45,23 @@ Jenkins.instance.getAllItems().each { item ->
     }
 }
 
+import jenkins.model.Jenkins
+
+Jenkins.instance.getAllItems().each { item ->
+    def cname = item.getClass().getName().toLowerCase()
+
+    if (cname.contains("controller") || cname.contains("master") || cname.contains("client")) {
+        println "${item.getDisplayName()}  -->  ${item.getClass().getName()}"
+    }
+}
+
+
+import jenkins.model.Jenkins
+import com.cloudbees.jenkins.plugins.clients.MasterClient  // example
+
+return Jenkins.instance.getAllItems(com.cloudbees.jenkins.plugins.clients.MasterClient)
+       .collect { it.getDisplayName() }
+       .sort()
 
 
 
