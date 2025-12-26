@@ -1,0 +1,27 @@
+import groovy.json.JsonSlurper
+
+// ====== CJOC API Details ======
+def cjocUrl  = "https://<CJOC-URL>/cjoc/operations-center/api/json?depth=2"
+def user     = "<CJOC-USERNAME>"
+def pass     = "<PASSWORD>"
+// ===============================
+
+// Build Basic Auth header
+def auth = "${user}:${pass}".bytes.encodeBase64().toString()
+
+// Make REST call
+def conn = new URL(cjocUrl).openConnection()
+conn.setRequestProperty("Authorization", "Basic ${auth}")
+
+def text = conn.inputStream.text
+def json = new JsonSlurper().parseText(text)
+
+// Extract controller names
+def list = []
+
+if (json.connectedControllers) {
+    list = json.connectedControllers.collect { it.displayName }
+}
+
+// Return sorted dropdown list
+return list.sort()
