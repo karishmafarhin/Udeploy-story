@@ -28,4 +28,23 @@ controllers.each { c ->
     println c.getDisplayName()
 }
 
+import jenkins.model.Jenkins
+import com.cloudbees.opscenter.server.model.ConnectedController
+
+Jenkins.instance.getAllItems(ConnectedController).each {
+    println it.getDisplayName()
+}
+
+
+import jenkins.model.Jenkins
+
+Jenkins.instance.getAllItems().each { item ->
+    def className = item.getClass().getName()
+    if (className.toLowerCase().contains("controller") || className.toLowerCase().contains("master")) {
+        println "${item.getDisplayName()}  -->  ${className}"
+    }
+}
+
+
+
 
