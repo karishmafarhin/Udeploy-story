@@ -56,6 +56,27 @@ Jenkins.instance.getAllItems().each { item ->
 }
 
 
+import groovy.json.JsonSlurper
+
+def cjocUrl  = "https://<CJOC-URL>/cjoc/operations-center/api/json?depth=2"
+def user     = "<USER>"
+def token    = "<TOKEN>"
+
+def auth = "${user}:${token}".bytes.encodeBase64().toString()
+
+def conn = new URL(cjocUrl).openConnection()
+conn.setRequestProperty("Authorization", "Basic ${auth}")
+
+def response = conn.inputStream.text
+def json = new JsonSlurper().parseText(response)
+
+json.connectedControllers.each { c ->
+    println c.displayName
+}
+
+
+
+
 import jenkins.model.Jenkins
 import com.cloudbees.jenkins.plugins.clients.MasterClient  // example
 
