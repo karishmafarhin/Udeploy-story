@@ -1,0 +1,6 @@
+import jenkins.model.Jenkins
+import com.cloudbees.opscenter.server.model.ConnectedMaster
+
+def controllers = Jenkins.instance.getAllItems(ConnectedMaster)
+
+return controllers.collect { it.getDisplayName() }.sort()
