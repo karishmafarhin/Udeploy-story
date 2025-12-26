@@ -3,4 +3,17 @@ import com.cloudbees.opscenter.server.model.ConnectedMaster
 
 def controllers = Jenkins.instance.getAllItems(ConnectedMaster)
 
-return controllers.collect { it.getDisplayName() }.sort()
+return controllers.collect { it.getDisplayName() }.sort(*
+
+
+
+import jenkins.model.Jenkins
+
+def allControllers = []
+
+// For modern CloudBees CI (Operations Center + Controllers)
+Jenkins.instance.getAllItems(com.cloudbees.opscenter.server.model.ConnectedMaster).each { cm ->
+    allControllers << cm.getDisplayName()
+}
+
+return allControllers.sort()
