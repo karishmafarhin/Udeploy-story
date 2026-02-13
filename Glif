@@ -1,0 +1,46 @@
+Create an AWS architecture diagram for CloudBees CI running on Amazon EKS across 3 Availability Zones.
+
+Include the following:
+
+1. Availability Zones:
+   - AZ-A
+   - AZ-B
+   - AZ-C
+
+2. Networking:
+   - One VPC surrounding all components
+   - Public subnets in each AZ
+   - Private subnets in each AZ
+
+3. Load Balancing:
+   - Internet-facing Application Load Balancer (ALB) placed in the public subnets
+   - Route 53 pointing to the ALB
+
+4. EKS Cluster:
+   - EKS control plane (managed by AWS)
+   - Node groups inside each private subnet:
+       * System Node Group
+       * Worker Node Group
+       * Agent/Builder Node Group (optional)
+   - Place CloudBees components on the worker nodes:
+       * CloudBees Operations Center
+       * Managed Controllers
+       * Agents
+
+5. Storage:
+   - Amazon EFS file system outside AZs (regional)
+   - EFS mount targets inside each private subnet (AZ-A, AZ-B, AZ-C)
+
+6. Ingress:
+   - AWS Load Balancer Controller inside the cluster
+   - Ingress routing from ALB to CloudBees services
+
+7. Other AWS Services:
+   - AWS Secrets Manager connected to CloudBees pods for credentials
+   - CloudWatch Logs/Monitoring
+   - S3 bucket for backups or artifact storage
+
+Show connections:
+- Route53 → ALB → Ingress → EKS workloads
+- EKS → EFS mount targets → EFS file system
+- CloudBees → Secrets Manager
