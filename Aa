@@ -20,3 +20,21 @@ If there is a specific business requirement to be exempted from these restrictio
 
 
 Please review the above and proceed accordingly. Let us know once the QA-side investigation with your vendor is complete or if you need any further support from our side.
+
+
+
+Amazon EKS – Kubernetes control plane
+Amazon EC2 – Worker nodes for EKS
+Amazon VPC – Networking, subnets, route tables
+Elastic Load Balancer (ALB/NLB) – For CloudBees Web UI access
+Amazon S3 – Storage (backups, artifacts, logs if needed)
+Amazon EFS – Shared filesystem for controllers/workspaces
+Amazon RDS (optional) – External DB if required
+Amazon CloudWatch – Logs, metrics, monitoring
+AWS IAM – Roles for service accounts (IRSA), nodes, users
+Amazon Route 53 – DNS for CloudBees domain
+AWS Secrets Manager / SSM Parameter Store – To store secrets
+AWS Load Balancer Controller – Deployed inside EKS for ALB
+Amazon KMS – Encryption for secrets/EFS/S3
+AWS Auto Scaling – For EC2 node groups
+AWS ECR – Container images (optional if not using DockerHub)
