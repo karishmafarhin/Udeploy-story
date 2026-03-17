@@ -1,0 +1,62 @@
+1. High-Level Architecture Overview
+CloudBees CI will run entirely on Amazon EKS, with the following components:
+Control Plane
+Managed EKS control plane (AWS-managed)
+Multi-AZ deployment
+Compute
+Worker nodes (managed node groups)
+Options:
+On-Demand
+Spot (for build agents only)
+CloudBees Components
+Operations Center (OC) – central management
+Managed Controllers (MC) – separate controllers per team/project
+Build Agents – ephemeral Kubernetes pods
+Shared Libraries – stored in Git
+Service Cloud integrations – Webhooks, SCM, etc.
+2. Architecture Components (Detailed)
+a) EKS Cluster (Multi-AZ)
+Version: EKS 1.29+ (recommended)
+Node groups:
+System Node Group → OC + MCs
+Build Agent Node Group → EC2 or Fargate (optional)
+b) Storage
+EBS CSI → PersistentVolumes for:
+Operations Center
+Managed Controllers
+S3 → Backups, artifacts, configuration archive
+c) Build Agents
+Kubernetes pod-based agents
+Autoscaled using:
+Horizontal Pod Autoscaler
+Cluster Autoscaler
+Agents run in separate namespaces or dedicated node pools
+d) Networking
+VPC with private subnets for controllers
+NLB / ALB exposed via:
+ingress-nginx OR
+AWS Load Balancer Controller
+DNS:
+Route53 → ci.company.com
+Ingress uses:
+TLS termination (ACM certificate)
+e) Security
+IAM roles:
+IRSA for controllers & pods
+Least privilege model
+Secrets management:
+AWS Secrets Manager OR
+Kubernetes Secrets (encrypted by KMS)
+Authentication:
+SSO / SAML (Okta / AD) integrated with CloudBees Ops Center
+RBAC mapped to groups
+f) Observability
+Logging:
+CloudWatch Container Insights
+Fluent Bit DaemonSet
+Monitoring:
+Prometheus + Grafana
+or
+CloudWatch metrics (EKS native)
+Alerts:
+SNS / Slack / PagerDuty
