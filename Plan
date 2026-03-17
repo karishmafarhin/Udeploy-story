@@ -1,0 +1,99 @@
+Phase
+Scope
+Env
+Deployments / Activities
+Limitations / Notes
+Dependencies / Pre-reqs
+Validation
+Timelines
+Status
+Deliverables / Outcome
+Comments
+DEV Setup – Data Migration
+Prepare EKS DEV cluster and migrate data from TKGI to EKS
+DEV
+• EKS cluster provisioning• Install CloudBees CI components• Migrate controller data & configs• Storage & secrets setup
+Limited downtime allowed
+• EKS cluster ready• IAM roles, VPC, networking• S3 backups / snapshots
+• Controller comes up• Jobs visible• Plugins validated
+2–3 days
+In Progress / Pending
+DEV environment ready on EKS with migrated data
+—
+DEV Validation
+Validate functionality of migrated DEV environment
+DEV
+• Pipeline execution tests• Plugins validation• Authentication/SSO test• RBAC checks
+Some plugins may require upgrade
+• DEV migration completed
+• Pipelines run successfully• Access validation done
+1–2 days
+Pending
+Validation sign-off for DEV
+—
+DEV Drill
+Perform end-to-end rehearsal for PROD migration
+DEV
+• Dry-run cutover • Backup/restore simulation• Failover test
+Minor deviations expected
+• DEV validated• Updated runbooks
+• All test cases pass• Backup/restore verified
+1 day
+Pending
+Drill report & updated SOP
+—
+Cutover for DEV
+Switch traffic and make EKS DEV live
+DEV
+• Final sync• Cut DNS / routing• Decommission TKGI DEV (optional)
+Short downtime required
+• Drill completed• CAB approvals (if needed)
+• Application accessible• Jenkins jobs firing
+1 day
+Pending
+EKS DEV fully live
+—
+PROD Setup – Data Migration
+Provision PROD EKS and migrate all CloudBees CI production data
+PROD
+• EKS PROD cluster setup• Security hardening• Backup migration• Secrets & controller config
+Downtime window required
+• All PROD prerequisites met• IAM, VPC, networking• S3 storage, NLB ready
+• Controllers come up• Jobs & configs intact
+2–3 days
+Pending
+PROD environment ready for validation
+—
+PROD Validation
+Validate all PROD jobs and functionality
+PROD
+• End-to-end pipeline execution• RBAC/SSO validation• Plugin checks• Controllers health
+Must be zero-tolerance for failures
+• PROD migration done
+• All PROD test cases pass
+1–2 days
+Pending
+UAT/SIT sign-off
+—
+PROD Drill
+Rehearsal of PROD cutover to ensure smooth transition
+PROD
+• Backup/restore testing• Failover test• Environment sanity checks
+No downtime allowed
+• PROD validation complete
+• Drill result meeting expectations
+1 day
+Pending
+Drill sign-off
+—
+Cutover for PROD
+Switch from TKGI → EKS for production
+PROD
+• Final sync• Stop controllers• Restore to EKS• Update DNS / ingress• Bring EKS live
+Requires downtime window
+• CAB approvals• Final backup
+• Controllers up• Jobs running
+Migration Day
+Pending
+PROD fully live on EKS
+—
